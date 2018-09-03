@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" href="../images/icon.png">
+    <title>Riku Sign Up</title>
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/main.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style type="text/css" abt="234"></style>
+    <script>
+    $(document).ready(function(){
+      $('#reg_password_again').keyup(function(){
+        if ($('#reg_password_again').val() != $('#reg_password').val()) {
+          $('#reg_password_again').css("color", "#DC143C");
+        } else {
+          $('#reg_password_again').css("color", "#495057");
+        }
+      });
+    });
+    </script>
+  </head>
+  <body class="bg-light">
+    <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-md-row justify-content-between">
+        <a class="py-2" href='main.html'>
+          <img src="../images/icon.png" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        </a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="#">Main</a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="#">Article</a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="#">Live</a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="#">Machine</a>
+        <a class="py-2" href='login.html'>
+          <img src="../images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
+        </a>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="container container--xs">
+            <div class="woocommer">
+              <div id="signup_div" class="my-5">
+                <img class="d-block mx-auto mb-4" src="../images/logo3.jpg" alt width="72" height="72">
+                <h1 class="mb-1 text-center">注册</h1>
+                <p class="text-center mb-5 required" id="reg_btn_info"></p>
+                <form class="register" novalidate="novalidate">
+                  <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label for="reg_email">邮箱 <span class="required">*</span></label>
+                    <input type="email" class="form-control woocommerce-input" name="email" id="reg_email" value="">
+                    <div class="invalid-feedback">This field is required</div>
+                  </p>
+                  <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label for="reg_password">密码 <span class="required">*</span></label>
+                    <input type="password" class="form-control woocommerce-input" name="password" id="reg_password"  value="">
+                    <div class="invalid-feedback">This field is required</div>
+                  </p>
+                  <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                    <label for="reg_password">确认密码 <span class="required">*</span></label>
+                    <input type="password" class="form-control woocommerce-input" name="password" id="reg_password_again"  value="">
+                    <span id="passwdAgain"></span>
+                    <div class="invalid-feedback">This field is required</div>
+                  </p>
+                  <p class="form-row-first woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+		                 <label for="reg_sr_sex">性别 <span class="required">*</span></label>
+                     <div class="row reg-raido">
+                       <div><input type="radio" name="sr_sex" value="0" required=""><span>男</span></div>
+                       <div class="rl-2"><input type="radio" name="sr_sex"value="1" required=""><span>女</span></div>
+                       <div class="rl-2"><input type="radio" name="sr_sex" value="2" required=""><span>secret</span></div>
+                     </div>
+	                   <div class="invalid-feedback">This field is required</div>
+                  </p>
+                  <p class="woocomerce-FormRow form-row">
+                    <input class="btn btn-register btn-block btn-lg mb-4 mt-3" style="margin:0;" name="register" value="Sign Up" onclick="checkreg()">
+                    <div class="invalid-feedback">This field is required</div>
+                    </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="../images/logo3.png" alt width="72" height="72">
+        <h2>注册信息</h2>
+    </div> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
+  </body>
+</html>
