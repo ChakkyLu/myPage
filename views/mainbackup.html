@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="cn">
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <link rel="icon" href="../images/icon.png">
+    <title>Riku HomePage</title>
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/components.css"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style type="text/css" abt="234"></style>
+    <% if (userInfo.weiboToken) { %>
+      <script>
+        $('#modal-signin').show();
+      </script>
+    <% } %>
+    <script>
+      $(document).ready(function(){
+          var id = $('#uinfo').html();
+          if (id) {
+            $('#logged').show();
+            $('#hover-login').hide();
+          }else {
+            $('#logged').hide();
+          }
+          $('#logged').hover(function() {
+            $('.app_icon').show();
+          }, function() {
+            $('.app_icon').hide();
+          });
+          var winWidth, winHeight;
+          if (window.innerWidth) {
+            winWidth = window.innerWidth;
+            winHeight = window.innerHeight;
+          }
+          else if ((document.body) && (document.body.clientWidth)) {
+            winWidth = document.body.clientWidth;
+            winHeight = document.body.clientHeight;
+          }
+          $('#myCanvas').css('width', winWidth);
+          $('#myCanvas').css('height', winHeight);
+      });
+    </script>
+  </head>
+  <body>
+    <nav class="site-header sticky-top py-1">
+      <h2 hidden id="uinfo"><%=userInfo._id%></h2>
+      <div class="container d-flex flex-md-row justify-content-between">
+        <a class="py-2" href='#'>
+          <img src="images/icon.png" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        </a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="/">Main</a>
+        <a class="py-2 d-md-inline-block nav-a-color" href="#">Article</a>
+        <li class="nav-item dropdown">
+          <a class="py-2 d-md-inline-block nav-a-color dropdown-toggle" href="#" data-toggle="dropdown" id="expand-game">Game</a>
+          <div class="dropdown-menu" aria-labelledby="expand-game" style="margin-left:-4rem!important;">
+            <a class="dropdown-item" href="/game?title=flappyBall">Flappy Ball</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+        </li>
+        <a class="py-2 d-md-inline-block nav-a-color" href="/machine?key=price">Machine</a>
+        <a class="py-2 d-md-inline-block nav-a-color" href='https://api.weibo.com/oauth2/authorize?client_id=1606107874&response_type=code&redirect_uri=http://www.rikuki.cn/main.html' id="associate-weibo">Weibo</a>
+        <!-- <a class="py-2" href='login.html'>
+          <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
+        </a> -->
+        <a class="py-2" data-toggle="modal" data-target="#loginModal" id="hover-login">
+          <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
+        </a>
+        <a class="py-2" id="logged" style="display:none">
+          <img src="images/loged.jpg" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" type="button" id="selfInfoButton" data-toggle="dropdown" aria-expanded="false">
+          <div class="dropdown-menu dropdown-self"  aria-labelledby="selfInfoButton">
+            <div class="row-2">
+              <img src="images/logo3.jpg" class="self-icon" width="60" height="60" viewBox="0 0 60 60">
+              <h class="self-name"><%=userInfo._username%></h>
+              <% if (userInfo.isweibo) { %>
+                <button type="button" class="btn btn-quit1 btn-sm" style="font-size:12px;" disabled>已关联微博</button>
+              <% } else { %>
+                <button type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button>
+              <% } %>
+              <!-- <button type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button> -->
+              <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;">退出</button>
+            </div>
+            <!-- <div class="row-2">
+              <div class="row"><button type="button" class="btn btn-quit1 btn-sm">退出</button></div>
+              <div class="row"><button type="button" class="btn btn-quit btn-sm" onclick="associateWeibo()">关联微博</button></div>
+            </div> -->
+          </div>
+        </a>
+      </div>
+    </nav>
+    <div class="container" id="left-nav-bar">
+      <h3 class="large-title"> 显示结果 </h3>
+      <ul class="show-result-ul">
+        <li class="cell-result-li">全部分类</li>
+        <li class="cell-result-li">电器</li>
+      </ul>
+    </div>
+
+    <div class="text-center">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <img src="images/webicon.png" width="300" height="300">
+        <input type="text" id="searchBox" class="form-control my-1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+        <div class="my-1">
+          <button type="button" class="btn btn-search" onclick="searchArticle()">Search</button>
+        </div>
+      </div>
+      <!-- <canvas id="myCanvas" width="1524" height="908" class="canvas-brush"> -->
+    </div>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-siginin" role="document">
+        <% if (userInfo.weiboToken) { %>
+          <div class="modal-content login-modal" style="height:60%;">
+        <% } else { %>
+          <div class="modal-content login-modal">
+        <% } %>
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">请登陆账号</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5 class="text-center" id="loginnotice" visibility="hidden"></h5>
+            <input id="username" type="email" class="form-control modal-input" placeholder="用户名／邮箱" name="username">
+            <input id="password" type="password" class="form-control modal-input my-2" placeholder="密码" name="password">
+            <div class="checkbox">
+              <label class="ml-4">
+                <input type="checkbox" value="remember-me" id="rempwd"> 记住密码
+              </label>
+            </div>
+            <hr>
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+            <button type="button" class="btn btn-primary">登陆</button> -->
+            <% if (userInfo.weiboToken) { %>
+              <p> 已检测到关联微博 <em> <%= userInfo.weiboToken.name%></em> 请注册一个用户名or邮箱</p>
+              <button class="btn btn-signup btn-block" onclick=""> 注册 </button>
+            <% } else { %>
+              <button class="btn btn-login btn-block" onclick="checkLogin()"> 登陆 </button>
+              <p> 还没有账号? </p>
+              <button class="btn btn-signup btn-block" onclick="signup()"> 注册 </button>
+              <p> 或者使用微博登录 (由于微应用审核中，该功能日后开启)</p>
+              <button class="btn btn-weibo btn-block" onclick="associateWeibo()" disabled> 关联微博 </button>
+            <% } %>
+
+            <!-- <button class="btn btn-login btn-block" onclick="checkLogin()"> 登陆 </button>
+            <p> 还没有账号? </p>
+            <button class="btn btn-signup btn-block" onclick="signup()"> 注册 </button>
+            <p> 或者使用微博登录 </p>
+            <button class="btn btn-weibo btn-block" onclick="associateWeibo()" > 关联微博 </button> -->
+          </div>
+          <!-- <div class="modal-footer">
+
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+
+    <div class="top-nav-bar clearfix" id="navbar">
+      <div class="nav-top-left">
+        <a class="nav-left-logo" href="#">
+          <img src="/images/logo2.png" alt="logo" width="150" height="60"/>
+        </a>
+      </div>
+      <div class="top-middle-search">
+        <div class="input-group">
+          <div class="input-group-prepend input-group-align">
+            <button class="btn btn-nav-search dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">女装</a>
+              <a class="dropdown-item" href="#">家具／家电</a>
+              <a class="dropdown-item" href="#">数码／手机</a>
+              <a class="dropdown-item" href="#">母婴／玩具</a>
+              <a class="dropdown-item" href="#">美妆／护肤</a>
+              <a class="dropdown-item" href="#">饰品／配件</a>
+            </div>
+            <form action="#" accept-charset="utf-8" target="_self">
+              <input type="search" placeholder="无人机" aria-label="goods-search" placeholder=""/>
+              <input type="submit" class="search-span"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="top-right-nav">
+        <div class="top-right-pro">
+          <a class="nv-right-announce" href="#" data-toggle="dropdown" aria-expanded="false" id="qrcode">
+            <img src="/images/timg.jpeg" alt="qrcode" width="60" height="50"/>
+          </a>
+          <div class="dropdown-menu qrcode-dropdown"  aria-labelledby="qrcode">
+            <img src="/images/timg.jpeg" width="120" height="120" class="qrcode-show"/>
+            <label class="simple-label"> 扫描二维码下载app，优惠更多！ </label>
+          </div>
+        </div>
+      </div>
+      <div class="top-right-nav">
+        <div class="top-right-cart">
+          <a class="nv-right-cart" href="#">
+            <img src="/images/cart.jpg" alt="qrcode" width="60" height="50"/>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="leftNav" id="left-nav-bar">
+      <div class="container">
+        <h3 class="large-title"> 显示结果 </h3>
+        <ul class="show-result-ul">
+          <li class="cell-result-li">
+            <span class="cell-result-li-span">
+              <a class="cell-result-link" href="#">
+                <span class="cell-result-small-span">
+                  All Category
+                </span>
+              </a>
+            </span>
+          </li>
+          <li class="cell-result-li" >
+            <span class="cell-result-li-span">
+              <a class="cell-result-link" href="#">
+                <span class="cell-result-small-span">
+                  Cell Phones
+                </span>
+              </a>
+            </span>
+          </li>
+        </ul>
+        <hr class="spacing-base"/>
+        <h3 class="large-title"> 筛选 </h3>
+        <h4 class="medium-title"> 发货地 </h4>
+        <ul class="check-list">
+          <div class="check-list-container">
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 珠三角 </label>
+            </li>
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 江浙沪 </label>
+            </li>
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 北京 </label>
+            </li>
+            <li class="check-list-li">
+                <span class="form-check-input check-list-more"> >> </span>
+                <div class="dropright">
+                  <label class="form-check-label check-list-label-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  其他城市 </label>
+            </li>
+          </div>
+        </ul>
+        <h4 class="medium-title"> 价格范围 </h4>
+        <ul class="check-list price-check-list">
+          <li class="price-list">
+            <a class="price-range-a"> 0-100元 </a>
+          </li>
+          <li class="price-list">
+            <a class="price-range-a"> 101-200元 </a>
+          </li>
+          <li class="price-list">
+            <a class="price-range-a"> 201-300元 </a>
+          </li>
+          <li class="price-list">
+            <a class="price-range-a"> 301-400元 </a>
+          </li>
+          <li class="price-list">
+            <a class="price-range-a"> 400元~ </a>
+          </li>
+          <li class="price-input-list">
+            <span class="price-list-input-span"> ¥ </span>
+            <input class="form-control price-list-input" type="text" maxlength="9" aria-labe="minimum-price" placeholder="最小"/>
+            <span> - </span>
+            <span class="price-list-input-span price-span-right"> ¥ </span>
+            <input class="form-control price-list-input" type="text" maxlength="9" aria-labe="minimum-price" placeholder="最大"/>
+            <button class="btn btn-sm btn-price-list-enter" type="button"> 确定 </button>
+          </li>
+        </ul>
+        <h4 class="medium-title"> 品牌 </h4>
+        <ul class="check-list">
+          <div class="check-list-container">
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 苹果 </label>
+            </li>
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 华为 </label>
+            </li>
+            <li>
+              <input class="form-check-input check-list-box" type="checkbox" value=""/>
+              <label class="form-check-label check-list-label"> 小米 </label>
+            </li>
+            <li class="check-list-li">
+                <span class="form-check-input check-list-more"> >> </span>
+                <div class="dropright">
+                  <label class="form-check-label check-list-label-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  查看更多 </label>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </div>
+    <div id ="rightNav">
+      <div class="right-content">
+        <ul class="right-content-result-ul">
+          <li class="content-result-li">
+            <div class="content-item">
+              <div class="content-item-spacing">
+              </div>
+              <div class="content-item-border">
+                <a class="content-item-border">
+                  <img class="content-item-img" src="/images/webicon.png"/>
+                </a>
+              </div>
+              <div class="content-item-title">
+                <a class="content-item-label" href="#">
+                  <h2 class="content-item-text">国外进口专为程序员设计颈部护理器</h2>
+                </a>
+                <a class="content-item-label" href="#">
+                  <h2 class="content-item-text" style="color: red;">¥300</h2>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="navFooter">
+      <hr/>
+      <div class="footer-table">
+        <div class="footer-content">
+          <div class="footer-link-col">
+            <div class="footer-link-head">合作信息</div>
+            <ul class="footer-link-ul">
+              <li class="footer-link-li">
+                <a class="footer-link"href="#">我要开店</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">我要加盟</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">我要宣传</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">合作伙伴</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-link-interval"></div>
+          <div class="footer-link-col">
+            <div class="footer-link-head">支付方式</div>
+            <ul class="footer-link-ul">
+              <li class="footer-link-li">
+                <a class="footer-link"href="#">支付宝</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">微信支付</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">信用卡</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">Paypal</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-link-interval"></div>
+          <div class="footer-link-col">
+            <div class="footer-link-head">常见问题</div>
+            <ul class="footer-link-ul">
+              <li class="footer-link-li">
+                <a class="footer-link"href="#">购物流程</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">如何支付</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">开店流程</a>
+              </li>
+              <li class="footer-link-li">
+                <a class="footer-link" href="#">帮助中心</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <span class="footer-copyright"> © 2018-2019 rikuki.cn 版权所有 </span>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="Application/javascript" src="javascripts/main.js"></script>
+  </body>
+</html>

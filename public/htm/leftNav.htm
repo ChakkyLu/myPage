@@ -1,0 +1,99 @@
+<div class="leftNav" id="left-nav-bar">
+  <div class="container">
+    <h3 class="large-title"> 显示结果 </h3>
+    <ul class="show-result-ul">
+      <li class="cell-result-li">
+        <span class="cell-result-li-span">
+          <a class="cell-result-link" href="#">
+            <span class="cell-result-small-span">
+              全部分类
+            </span>
+          </a>
+        </span>
+      </li>
+      <li class="cell-result-li" ng-repeat="backcategory in backcategories">
+        <span class="cell-result-li-span">
+          <a class="cell-result-link" href="#" ng-click="backToFormer(backcategory.id)">
+            <span class="cell-result-small-span">
+              {{backcategory.text}}
+            </span>
+          </a>
+        </span>
+      </li>
+    </ul>
+    <hr class="spacing-base"/>
+    <h3 class="large-title"> 筛选 </h3>
+    <h4 class="medium-title"> 发货地 </h4>
+    <ul class="check-list">
+      <div class="check-list-container" >
+        <li ng-repeat="district in districts">
+          <input class="form-check-input check-list-box" type="checkbox" value=""/>
+          <label class="form-check-label check-list-label" v-bind:value="index"> {{district.text}} </label>
+        </li>
+        <!-- <li>
+          <input class="form-check-input check-list-box" type="checkbox" value=""/>
+          <label class="form-check-label check-list-label" v-bind:value="2"> 江浙沪 </label>
+        </li>
+        <li>
+          <input class="form-check-input check-list-box" type="checkbox" value=""/>
+          <label class="form-check-label check-list-label"  v-bind:value="3"> 北京 </label>
+        </li> -->
+        <li class="check-list-li">
+            <span class="form-check-input check-list-more"> >> </span>
+            <div class="dropright">
+              <label class="form-check-label check-list-label-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  其他城市 </label>
+            </div>
+        </li>
+      </div>
+    </ul>
+    <h4 class="medium-title"> 价格范围 </h4>
+    <ul class="check-list price-check-list">
+      <li class="price-list" ng-repeat="range in prices">
+        <a class="price-range-a"> {{range.text}} 元</a>
+      </li>
+      <!-- <li class="price-list">
+        <a class="price-range-a"> 101-200元 </a>
+      </li>
+      <li class="price-list">
+        <a class="price-range-a"> 201-300元 </a>
+      </li>
+      <li class="price-list">
+        <a class="price-range-a"> 301-400元 </a>
+      </li>
+      <li class="price-list">
+        <a class="price-range-a"> 400元~ </a>
+      </li> -->
+      <li class="price-input-list">
+        <span class="price-list-input-span"> ¥ </span>
+        <input class="form-control price-list-input" type="text" maxlength="9" aria-labe="minimum-price" placeholder="最小" ng-model="minprice"/>
+        <span> - </span>
+        <span class="price-list-input-span price-span-right"> ¥ </span>
+        <input class="form-control price-list-input" type="text" maxlength="9" aria-labe="minimum-price" placeholder="最大" ng-mode="maxprice"/>
+        <button class="btn btn-sm btn-price-list-enter" type="button"> 确定 </button>
+      </li>
+    </ul>
+    <h4 class="medium-title"> 品牌 </h4>
+    <ul class="check-list">
+      <div class="check-list-container">
+        <li ng-repeat="brand in brands">
+          <input class="form-check-input check-list-box" type="checkbox"/>
+          <label class="form-check-label check-list-label"> {{brand.text}} </label>
+        </li>
+        <!-- <li>
+          <input class="form-check-input check-list-box" type="checkbox" value=""/>
+          <label class="form-check-label check-list-label"> 华为 </label>
+        </li>
+        <li>
+          <input class="form-check-input check-list-box" type="checkbox" value=""/>
+          <label class="form-check-label check-list-label"> 小米 </label>
+        </li> -->
+        <li class="check-list-li">
+            <span class="form-check-input check-list-more"> >> </span>
+            <div class="dropright">
+              <label class="form-check-label check-list-label-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  查看更多 </label>
+            </div>
+        </li>
+      </div>
+    </ul>
+  </div>
+</div>

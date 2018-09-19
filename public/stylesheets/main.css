@@ -1,31 +1,82 @@
-a:hover {
-  color: rgb(255,255,255);
+
+body {
+  background-color: #fff;
 }
-.site-header {
-  background-color: rgba(0, 0, 0, .85);
+@media (max-width: 991.98px) {
+  .nav-a-color {
+    max-width: 100%;
+    height: 2.5rem;
+    margin-top: .25rem;
+    overflow: hidden;
+    font-size: .875rem;
+    padding-bottom: 2rem;
+    overflow-x: 2rem;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .py-2 {
+    margin-left: 1rem!important;
+  }
+}
+@media (max-width: 500px) {
+  .nav-a-color {
+    max-width: 100%;
+    height: 2.5rem;
+    margin-top: .25rem;
+    overflow: hidden;
+    font-size: .5rem;
+    padding-bottom: 2rem;
+    overflow-x: 2rem;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pic-shrink {
+    max-width: 100%;
+    height: 2.5rem;
+    overflow: hidden;
+  }
+}
+@media (min-width: 768px) {
+  @supports ((position: -webkit-sticky) or (position: sticky)) {
+    .nav-a-color {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1071;
+    }
+    .pic-shrink {
+      max-width: 100%;
+      height: 2.5rem;
+      overflow: hidden;
+    }
+  }
+}
+.flex-md-row {
+  flex-direction: row!important;
+}
+flex-column {
+  flex-direction: column!important;
 }
 .sticky-top {
   position: sticky;
   top: 0;
   z-index: 1020;
 }
-.pb-1, .py-1 {
-  padding-bottom: .25rem!important;
-}
-.pt-1, .py-1 {
-  padding-top: .25rem!important;
-}
-.pb-2, .py-2 {
-  padding-bottom: .5rem!important;
-}
-.pt-2, .py-2 {
-  padding-top: .5rem!important;
-}
 .d-flex {
   display: flex!important;
 }
 .flex-md-row {
   flex-direction: row!important;
+}
+.py-2 {
+  margin-left: 2rem;
+}
+.nav-a-color:hover {
+  border-bottom-style: solid;
+  border-bottom-color: #8B8386;
+  border-bottom-width: thick;
+  text-decoration: none;
+  color: rgb(0,0,0,.85);
 }
 .justify-content-between {
   justify-content: space-between!important;
@@ -35,6 +86,9 @@ a:hover {
 }
 .text-center {
   text-align: center!important;
+}
+.nav-item {
+  list-style-type: none;
 }
 .position-relative {
   position: relative!important;
@@ -56,9 +110,10 @@ a:hover {
 @media (min-width: 768px)
 .d-md-inline-block {
   display: inline-block!important;
+
 }
 .nav-a-color {
-  color: rgb(220,220,220);
+  color: #8B8878;
 }
 @media (min-width: 992px)
 .p-lg-5 {
@@ -356,7 +411,7 @@ h.self-name {
   margin-top: 5rem;
   font-size: .8rem;
   text-align: center;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 button.btn-quit {
   color: #8B4B66;
@@ -364,14 +419,18 @@ button.btn-quit {
   margin-top: 7rem;
   border-color: #8B4B66;
   background-color: #ffff;
-  margin-left: 4rem;
+  margin-left: 6rem;
+  /* display: inline-block; */
+  vertical-align: middle;
+  display: flex;
 }
 input.modal-input {
   width: 100%;
 }
 div.login-modal {
   height: 80%;
-  width: 60%;
+  width: 70%;
+  margin-left: 3rem!important;
 }
 .ml-4 {
   margin-left: 6rem!important;
@@ -387,7 +446,10 @@ button.btn-quit1 {
   margin-top: 7rem;
   border-color: #8B4B66;
   background-color: #ffff;
-  margin-left: 2rem;
+  margin-left: 1rem;
+  /* display: inline-block; */
+  vertical-align: middle;
+  display: flex;
 }
 canvas.canvas-brush {
   /* position: relative; */
@@ -407,4 +469,334 @@ button.btn-weibo:hover {
   color: #fff;
   border-color: #FD7400;
   background-color: #FD7400;
+}
+.icon-items {
+  margin-top: 2rem!important;
+}
+div.row-2 {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+@media (min-width: 768px){
+.bd-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    height: calc(100vh - 4rem);
+}
+}
+@media (min-width: 768px){
+.bd-sidebar {
+  border-right: 1px solid rgba(0,0,0,.1);
+}
+}
+.bd-sidebar {
+    -ms-flex-order: 0;
+    order: 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.parameter-area {
+  float: left;
+  height: 435px;
+  width: 50%;
+  margin-left: 5px;
+  border-color: #FD7400;
+}
+
+.banner-cart-intro {
+  position: relative!important;
+  background-color: #f8f9fa;
+  overflow: hidden;
+  padding:3rem!important;
+  margin-right: 1rem!important;
+
+}
+.ebay-icon {
+  height: 50%;
+  padding: 0;
+  clear:both;
+  position: relative;
+  display: inline-block;
+}
+#ebay-icon .screen{
+  width: 200px;
+  height: 280px;
+  position: relative;
+  background: #ff6860;
+  border: 20px solid #474e5d;
+  border-radius: 10px;
+  margin: 0;
+}
+#ebay-icon .monitor:before,
+#ebay-icon .monitor:after {
+  content: "";
+  position: relative;
+  left:50%;
+}
+#ebay-icon .monitor:before {
+  top: -10px;
+  margin: -3px 0 0 -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  background: #a5adbd;
+}
+#ebay-icon .screen:after {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  bottom: -10px;
+  margin: 0 0 -4px -4px;
+  background: #e8ebf0;
+}
+
+#ebay-icon .laptop:before {
+  top: -10px;
+  margin: -3px 0 0 -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  background: #a5adbd;
+  content: "";
+  position: absolute;
+  left: 50%;
+}
+#ebay-icon .laptop {
+  width: 235px;
+  height: 155px;
+  background: #fc9252;
+  border: 12px solid #e8ebf0;
+  border-radius: 10px 10px 0 0;
+  position: absolute;
+  margin-left: 14rem;
+  margin-top: -10rem;
+}
+
+.txt-laptop {
+   width: 189px;
+}
+
+.txt-laptop > li {
+  background: #fda566;
+}
+
+.txt-laptop > li:nth-child(2) {
+  height: 41px;
+}
+
+.txt-laptop > .thin {
+  height: 36px;
+  margin-right: 5px;
+}
+
+.laptop > .content {
+  width: 211px;
+  height: 131px;
+  left: 0;
+  margin-left: 0;
+}
+
+.btm {
+  width: 296px;
+  height: 7px;
+  bottom: -19px;
+  left: 50%;
+  margin-left: -30px;
+  border-radius: 0 0 20px 20px;
+  background: #f4f5f7;
+  z-index: 1;
+}
+
+.btm:before {
+  content: "";
+  position: absolute;
+  width: 42px;
+  height: 3px;
+  left: 50%;
+  top: 0;
+  margin-left: 10px;
+  border-radius: 0 0 5px 5px;
+  background: #d8dbe1;
+}
+.shadow {
+  position: absolute;
+  width: 350px;
+  height: 15px;
+  left: 50%;
+  margin-left: -175px;
+  z-index: -1;
+  bottom: -20px;
+  background: radial-gradient(ellipse at center, rgba(52,172,108,1) 0%,rgba(52,172,108,1) 53%,rgba(46,204,113,1) 55%,rgba(46,204,113,0) 55%,rgba(46,204,113,0) 100%);
+}
+
+.laptop .shadow {
+  width: 450px;
+  margin-left: -225px;
+  bottom: -26px;
+}
+
+.icon-cart {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 3rem;
+  margin-left: 1.3rem;
+}
+
+.icon-cart .cart-line-1 {
+  width: 15%;
+  height: 7%;
+  position: absolute;
+  left: 8%;
+  top: 25%;
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  transform: rotate(5deg);
+  background-color: #000;
+  border-bottom-left-radius: 35%;
+}
+
+.icon-cart .cart-line-2 {
+  width: 35%;
+  height: 7%;
+  position: absolute;
+  left: 6%;
+  top: 40%;
+  -webkit-transform: rotate(80deg);
+  -moz-transform: rotate(80deg);
+  -ms-transform: rotate(80deg);
+  transform: rotate(80deg);
+  background-color: #000;
+}
+
+.icon-cart .cart-line-2:before {
+  content: "";
+  width: 120%;
+  height: 100%;
+  position: absolute;
+  left: 45%;
+  top: -280%;
+  -webkit-transform: rotate(-80deg);
+  -moz-transform: rotate(-80deg);
+  -ms-transform: rotate(-80deg);
+  transform: rotate(-80deg);
+  background-color: inherit;
+}
+
+.icon-cart .cart-line-2:after {
+  content: "";
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  left: 59%;
+  top: -670%;
+  background-color: inherit;
+  -webkit-transform: rotate(40deg);
+  -moz-transform: rotate(40deg);
+  -ms-transform: rotate(40deg);
+  transform: rotate(40deg);
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 25%;
+}
+.laptop-icon-cart {
+  margin:0;
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+}
+.icon-cart .cart-line-3 {
+  width: 30%;
+  height: 7%;
+  position: absolute;
+  left: 33%;
+  top: 45%;
+  background-color: #000;
+}
+
+.icon-cart .cart-line-3:after {
+  content: "";
+  width: 124%;
+  height: 100%;
+  position: absolute;
+  top: -150%;
+  left: -5%;
+  background-color: inherit;
+}
+
+.icon-cart .cart-wheel {
+  width: 12%;
+  height: 12%;
+  background-color: #000;
+  border-radius: 100%;
+  position: absolute;
+  left: 28%;
+  bottom: 20%;
+}
+
+.icon-cart .cart-wheel:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  border-radius: 100%;
+  position: absolute;
+  left: 200%;
+  bottom: 0;
+}
+
+.ebay-intro {
+  position: relative;
+  float:none;
+  clear:both;
+}
+.ebay-intro-h {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 25px;
+  height: auto;
+  width: 400px;
+  font-weight: normal;
+}
+.ebay-intro-label {
+  height: auto;
+  width: 400px;
+  margin-top: 3rem;
+  text-align: center;
+  color: #FF6347;
+}
+.ebay-intro-label em {
+  font-weight: bold;
+}
+.know-more {
+  float:right;
+  top:150px;
+  right:100px;
+}
+.know-more .icon-cart {
+  height:48px;
+  width:48px;
+  top:150px;
+  right:100px;
+}
+.know-more-h {
+  cursor: pointer;
+  top:115px;
+  right:40px;
+  color: #FFA500!important;
+}
+.know-more-h:hover {
+  color: #a5adbd!important;
+  text-decoration: none;
+}
+
+.top-right-cart .icon-cart {
+  height:60px;
+  width:60px;
+  margin: 0;
 }

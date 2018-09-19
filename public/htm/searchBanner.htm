@@ -1,0 +1,19 @@
+<div class="top-nav-bar" id="navbar">
+  <div class="nav-top-left">
+    <a class="nav-left-logo" href="#">
+      <img src="images/logo2.png" alt="logo" width="150" height="60"/>
+    </a>
+  </div>
+  <div class="top-middle-search">
+    <div class="input-group">
+      <div class="input-group-prepend input-group-align">
+          <select class="btn btn-nav-search" ng-options="y.name for y in catergory track by y.id" ng-model="selected">
+          </select>
+        <form action="#" accept-charset="utf-8" target="_self">
+          <input type="search" aria-label="goods-search" ng-model="searchKey" />
+          <input type="submit" class="search-span" ng-click="searchGoods()" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

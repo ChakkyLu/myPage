@@ -7,6 +7,7 @@ var Iconv = require('iconv-lite');
 var nodemailer = require('nodemailer');
 const rp = require('request-promise');
 const Promise = require('promise');
+const Md5 = require(__dirname + '/../public/javascripts/md5.js');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -35,14 +36,14 @@ function generateCode() {
   return  timestamp+tmp;
 }
 
-const pool = mysql.createPool({
+var pool1 = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "YYmm0607?!vr",
   database: "users"
 });
 
-let query = function (sql, values) {
+let query = function (sql, values, pool) {
   return new Promise((resolve, reject) => {
     pool.getConnection(function(err, connection) {
       if (err) reject(err);
@@ -50,7 +51,6 @@ let query = function (sql, values) {
         connection.query(sql, values, (err, rows) => {
           if (err) {
             reject(err);
-            console.log(err);
           }
           else resolve(rows)
           connection.release();
@@ -60,8 +60,8 @@ let query = function (sql, values) {
   })
 }
 
-function sendReq(url) {
-  return new Promise(function(resolve, reject) {
+let sendReq = function sendReq(url) {
+  return new Promise((resolve, reject) => {
     request(url, function(err, resp, body) {
       if (err) reject(err);
       else resolve(body);
@@ -86,15 +86,15 @@ function sendReq(url) {
 
 
 async function getToken(code) {
-  var url = "https://api.weibo.com/oauth2/access_token?" + `client_id=1606107874&client_secret=dc58406953c628e820ad3aedfa70a4cf&grant_type=authorization_code&code=${code}&redirect_uri=http://www.rikuki.cn/main.html`;
-  var data = {
+  let url = "https://api.weibo.com/oauth2/access_token?" + `client_id=1606107874&client_secret=dc58406953c628e820ad3aedfa70a4cf&grant_type=authorization_code&code=${code}&redirect_uri=http://www.rikuki.cn/passWeibo.html`;
+  let data = {
     client_id: "1606107874",
     client_secret: "dc58406953c628e820ad3aedfa70a4cf",
     grant_type: "authorization_code",
     code: code,
     redirect_uri: "http://www.rikuki.cn/main.html"
   }
-  var options = {
+  let options = {
     method: 'POST',
     uri: url,
     headers: {
@@ -105,107 +105,157 @@ async function getToken(code) {
     json: true
   };
   try {
-    var response = await rp(options);
-    return Promise.resolve({token: response.access_token, uid: response.uid});
+    let response = await rp(options);
+    return Promise.resolve({status: 2000, info:{token: response.access_token, uid: response.uid}});
   } catch(err) {
+    console.log(err);
     return Promise.resolve({status: 4000, info: "get token fail"});
   }
 }
 
-router.get(['/main.html', '/', '/game'], async(req, res, next) =>{
-  console.log(req.query);
-  var uid, token, weiboInfo = "";
-  var weiboStatus;
-  if (req.query.code) {
-    var codeRes = await getToken(req.query.code);
-    if(codeRes.hasOwnProperty('uid')) {
-      uid = codeRes.uid;
-      token = codeRes.token;
-    } else {
-      weiboInfo = codeRes.info;
-      weiboStatus = codeRes.status;
+async function getWeiboName(token, uid) {
+  let url = "https://api.weibo.com/2/users/show.json?" + `access_token=${token}&uid=${uid}`;
+  let options = {
+    method: 'GET',
+    uri: url,
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
+      'Content-Type': 'application/json'
     }
-  }
-  var userInfo = req.cookies.userInfo;
-  var _id;
-  try{
-    userInfo = JSON.parse(userInfo);
-    var _id = userInfo._id;
-    console.log(uid, _id);
-    if (uid && _id) {
-      var sql = `SELECT * FROM user WHERE id = '${_id}'`;
-      var result = await query(sql);
-      console.log(result);
-      if (result.length==1) {
-        var isweibo = result[0].isweibo;
-        console.log(isweibo);
-        if (isweibo) {
-          weiboStatus = 4002;
-          weiboInfo = "you have already assocaited with a weibo account";
-        } else {
-          console.log(token);
-          var update_sql = `UPDATE user SET isweibo = 1, weiboToken = "${token}", uid = ${uid} WHERE id = ${_id}`;
-          var updateResult = await query(update_sql);
-          weiboStatus = 2000;
-          weiboInfo = "your are successfuly assocaited with a weibo account";
-        }
-      } else {
-        weiboStatus = 4003;
-        weiboInfo = "current user does not exist";
-      }
-    } else {
-      if (weiboStatus != 4000){
-        weiboStatus = 2001;
-        weiboInfo = "no request for associating weibo";
-      }
-    }
-  } catch(e) {
-    if(!_id){
-      userInfo = {
-        _id: "",
-        _username: ""
-      };
-    }
-    if (uid) {
-      weiboStatus = 2002;
-      weiboInfo = "no user now but got token";
-    } else {
-      if (weiboStatus != 4000) {
-        weiboStatus = 2003;
-        weiboInfo = "no weibo request and no user";
-      }
-    }
-  }
-  var weiboRes = {
-    status: weiboStatus,
-    data: weiboInfo
   };
-  console.log(weiboRes);
-  if (req.query.title) {
-    res.render('game', {userInfo: userInfo});
+  try {
+    var response = await rp(options);
+    return Promise.resolve({status: 2000, info: response.name});
+  } catch(err) {
+    return Promise.resolve({status: 4008, info: "get weibo name fail"});
   }
-  else {
-    // var weiboRes = {
-    //   status: weiboStatus,
-    //   data: weiboInfo
-    // };
-    // console.log(weiboStatus);
-    // console.log(weiboInfo);
-    // var weiboRes = await waitWeibo;
-    res.render('main', {userInfo: userInfo});
+}
+
+router.get('/passWeibo.html', async(req, res) => {
+  let code = req.query.code;
+  var status = 0;
+  var info = "";
+  var userInfo = req.cookies.userInfo;
+  if (code) {
+    var codeRes = await getToken(code);
+    if (codeRes.status==2000) {
+      var uid = codeRes.info.uid;
+      let sql = `SELECT * FROM user WHERE uid = '${uid}'`
+      let result = await query(sql, null, pool1);
+      if (result!=0) {
+        let id = result[0].id;
+        let username = result[0].username ? result[0].username : result[0].email;
+        let userinfo = {
+          _id: id,
+          _username: username
+        };
+        let expiresTime = new Date();
+        let persistPeriod = 15*60*60*1000;
+        expiresTime.setTime(expiresTime.getTime() + persistPeriod);
+        res.cookie('userInfo', JSON.stringify(userInfo), {maxAge: persistPeriod, httpOnly: true, expires: expiresTime.toGMTString()});
+        status = 2000;
+        info = "login ok";
+      } else {
+        if (userInfo) {
+          var _id = JSON.parse(userInfo)._id;
+          if(_id) {
+            let sql = `SELECT * FROM user WHERE id = '${_id}'`;
+            let result = await query(sql, null, pool1);
+            if (result.length==1) {
+              var isweibo = result[0].isweibo;
+              if (isweibo) {
+                status = 4002;
+                info = "you have already assocaited with a weibo account || you are in logged status";
+              } else {
+                let sql2 = `SELECT * FROM user WHERE uid = '${uid}'`;
+                let result2 = await query(sql, null, pool1);
+                if (result2.length == 0) {
+                  let update_sql = `UPDATE user SET isweibo = 1, weiboToken = "${token}", uid = ${uid} WHERE id = ${_id}`;
+                  let updateResult = await query(update_sql, null, pool1);
+                  status = 2000;
+                  info = "your are successfuly assocaited with a weibo account";
+                } else {
+                  status = 4004;
+                  info = "this weibo account has been used before";
+                }
+              }
+            }
+          } else {
+            status = 2003;
+            info = "need to Add user";
+          }
+        }
+      }
+    } else {
+      status = 4000;
+      info = "get Weibo Token fail";
+    }
+  } else {
+    status = 3000;
+    info = "wrong url for passweibo";
   }
-  next();
+  console.log({status: status, info: info});
+  // res.render('main', {'passweibo': {status: status, info: info}, 'userInfo': userInfo});
 });
 
+router.get('/shopping.html', async(req, res) => {
+  res.render('shopping');
+});
 
-router.get('/login.html', function(req, res, next) {
-  res.render('login', { title: 'Express'});
-  next();
+router.get(['/main.html', '/', '/game', '/machine'], async(req, res, next) =>{
+  // var seriesInfo;
+  // var userInfo = req.cookies.userInfo;
+  // var _id;
+  // var _id;
+  // try{
+  //   userInfo = JSON.parse(userInfo);
+  //   _id = userInfo._id;
+  // }catch(e) {
+  //   if(!_id){
+  //     userInfo = {
+  //       _id: "",
+  //       _username: ""
+  //     };
+  //     _id = "";
+  //   }
+  // }
+  // if (_id) {
+  //   let sql = `SELECT * FROM user WHERE id = '${_id}'`;
+  //   var result = await query(sql, null, pool1);
+  //   if (result.length==1) {
+  //     var isweibo = result[0].isweibo;
+  //     var weiboname = "";
+  //     userInfo.weiboToken = weiboname
+  //     userInfo.isweibo = isweibo;
+  //     if (isweibo) {
+  //       let token = result[0].weiboToken;
+  //       var nameRes = await getWeiboName(token);
+  //       if (nameRes.status == 2000) weiboname = nameRes.info;
+  //       seriesInfo = {status:2000, info: "correct id and has weibo"};
+  //     } else  {
+  //       seriesInfo = {status:2000, info: "correct id and has no weibo"};
+  //     }
+  //   } else {
+  //       seriesInfo = {status:4000, info: "incorrect id"};
+  //   }
+  // } else {
+  //   seriesInfo = {status: 20001, info: "no user"};
+  // }
+  // userInfo.seriesInfo = seriesInfo;
+  // console.log(userInfo);
+  if (req.query.title) {
+    res.render('game');
+  }
+  else {
+    if (req.query.key) res.render('machine');
+    else res.render('main');
+  }  next();
 });
 
 router.post('/logout', async(req, res) => {
   var id = req.body.id;
-  res.cookie("userInfo", "");
+  console.log(id);
+  // res.cookie("userinfo", null);
   res.json({
     data: "logout ok",
     code: 200,
@@ -220,7 +270,7 @@ router.get('/signup.html', function(req, res, next) {
 });
 
 router.get('/search.html',  async(req, res) => {
-  url = "http://45.32.9.29:8000/search.html?keyword=" + encodeURI(req.query.keyword);
+  url = "http://www.rikuki.cn/api/search?keyword=" + encodeURI(req.query.keyword);
   console.log(url);
   var links = [];
   var urls = [];
@@ -239,27 +289,36 @@ router.get('/search.html',  async(req, res) => {
 router.post('/post_login', async(req, res) => {
   var username = req.body.username;
   var password = req.body.password;
-  var sql = `SELECT * FROM user WHERE username = '${username}'`;
-  var status = 'sucess';
-  var code = 400;
+  var sql = `SELECT * FROM user WHERE username = '${username}' OR email = '${username}'`;
+  var status = "";
+  var code;
   var data = "";
-  var result = await query(sql);
+  var result = await query(sql, null, pool1);
   if (result.length == 0) {
       status = 'error';
       code = 401;// wrong username;
+      data = "wrong username"
   }
   else {
     var tmpPwd = result[0].password;
     if (result[0].activate == 1) {
       if (tmpPwd === password) {
         code = 200;
-        data = "登陆成功";
         status = 'success'; // verify ok;
-        userInfo = {
-          _id: result[0].id,
-          _username: username
+        var userInfo = {
+          id: result[0].id,
+          username: username
         }
-        res.cookie('userInfo', JSON.stringify(userInfo), {maxAge: 900000, httpOnly: true});
+        data = JSON.stringify(userInfo);
+        var expiresTime = new Date();
+        if(req.body.remembered) {
+          var persistPeriod = 30*24*60*60*1000;
+        }
+        else {
+          var persistPeriod = 15*60*1000;
+        }
+        // expiresTime.setTime(expiresTime.getTime() + persistPeriod);
+        // res.cookie('userInfo', JSON.stringify(userInfo), {maxAge: persistPeriod, httpOnly: true, expires: expiresTime.toGMTString()});
       }
       else {
         code = 402; // wrong password;
@@ -279,7 +338,6 @@ router.post('/post_login', async(req, res) => {
     data: data,
     code: code
   };
-  console.log(response);
   res.json(response);
 });
 
@@ -287,7 +345,7 @@ router.post('/register', async(req, res) => {
   var reg_email = req.body.email;
   var reg_pwd = req.body.password;
   var sql = `SELECT * FROM user WHERE username = '${reg_email}'`;
-  var result = await query(sql);
+  var result = await query(sql, null, pool1);
   var reg_date = getMysqlDate();
   var response;
   if (result.length != 0) {
@@ -300,7 +358,7 @@ router.post('/register', async(req, res) => {
     var activateCode = generateCode();
     console.log(activateCode);
     var insert_sql = `INSERT INTO user (username, password, signup_date, activate, activateCode) VALUES ('${reg_email}', '${reg_pwd}', '${reg_date}', 0, '${activateCode}')`;
-    var inResult = await query(insert_sql);
+    var inResult = await query(insert_sql, null, pool1);
     response = {
       status: 'success',
       code : 200,
@@ -321,7 +379,6 @@ router.post('/register', async(req, res) => {
       }
     });
   }
-  console.log(response);
   res.json(response);
   return;
 });

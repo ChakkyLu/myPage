@@ -7,6 +7,8 @@ var ejs = require('ejs');
 var mainRouter = require('./routes/main');
 var usersRouter = require('./routes/users');
 var app = express();
+var vue = require('vue');
+app.use(express.static(path.join(__dirname, '/dist')));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

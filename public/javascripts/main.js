@@ -5,31 +5,34 @@ function checkLogin() {
   if (password == "") {
     alert("Please input password");
   }
+  console.log($('#rempwd')[0]['checked']);
   $.post('/post_login',
     {
       username: username,
-      password: password
+      password: password,
+      rempwd: Number($('#rempwd')[0]['checked'])
     },
     function(data, status) {
       jQuery.noConflict();
       console.log(data);
       switch (data.code) {
         case 401:
-          $('.modal-body').text("Please input correct username");
-          $('#myModal').modal('show');
+          $('#loginnotice-body').text("Please input correct username");
+          $('#loginnotice-body').visibility = "visible";
+          $('#loginnotice-body').css("color", '#DC143C');
           break;
         case 200:
           window.location.href = "main.html";
           break;
         case 402:
-          $('.modal-body').text("Please input correct password");
-          $('#myModal').modal('show');
-          $('#password').css("color", '#DC143C');
-          // console.log("sd");
+          $('#loginnotice-body').text("Please input correct password");
+          $('#loginnotice-body').visibility = "visible";
+          $('#loginnotice-body').css("color", '#DC143C');
           break;
         case 403:
-          $('.modal-body').text("Please activate your account at first");
-          $('#myModal').modal('show');
+          $('#loginnotice-body').text("Please activate your account at first");
+          $('#loginnotice-body').visibility = "visible";
+          $('#loginnotice-body').css("color", '#DC143C');
           break;
         default:
           break;
@@ -96,7 +99,7 @@ function checkreg() {
   return 0;
 }
 
-$('.btn-quit1').click(function() {
+$('.btn-quit').click(function() {
   var id = $('#uinfo').html();
   id = parseInt(id);
   console.log("ahah");
@@ -112,8 +115,7 @@ $('.btn-quit1').click(function() {
 });
 
 function associateWeibo() {
-  console.log("hahh");
   window.event.returnValue = false;
-  window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=1606107874&response_type=code&redirect_uri=http://www.rikuki.cn/main.html'
+  window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=1606107874&response_type=code&redirect_uri=http://www.rikuki.cn/passWeibo.html'
   return 0;
 }
