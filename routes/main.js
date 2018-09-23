@@ -202,10 +202,36 @@ router.get('/shopping.html', async(req, res) => {
   res.render('shopping');
 });
 
-router.get(['/main.html', '/', '/game', '/machine'], async(req, res, next) =>{
-  // var seriesInfo;
-  // var userInfo = req.cookies.userInfo;
-  // var _id;
+router.get(['/main.html', '/'], async(req, res, next) =>{
+  var seriesInfo;
+  var userInfo = req.cookies.userinfo;
+  var _id;
+  try{
+    userInfo = JSON.parse(userInfo);
+    _id = userInfo._id;
+  }catch(e) {
+    if(!_id){
+      userInfo = {
+        _id: "",
+        _username: ""
+      };
+      _id = "";
+    }
+  }
+  if (_id) {
+    let sql = `SELECT * FROM user WHERE id = '${_id}'`;
+    var result = await query(sql, null, pool1);
+    if (result.length==1) {
+      seriesInfo = {status:200, info: "get login status ok"};
+    } else {
+        seriesInfo = {status:401, info: "incorrect id"};
+    }
+  } else {
+    seriesInfo = {status: 201, info: "no cookies"};
+  }
+  userInfo.seriesInfo = seriesInfo;
+  console.log(userInfo);
+  res.render('main', {userInfo: userInfo});
   // var _id;
   // try{
   //   userInfo = JSON.parse(userInfo);
@@ -243,13 +269,39 @@ router.get(['/main.html', '/', '/game', '/machine'], async(req, res, next) =>{
   // }
   // userInfo.seriesInfo = seriesInfo;
   // console.log(userInfo);
-  if (req.query.title) {
-    res.render('game');
+  // if (req.query.title) {
+  //   res.render('game');
+  // }
+  // else {
+  //   if (req.query.key) res.render('machine');
+  //   else res.render('main');
+  // }  next();
+});
+
+router.get('/admin.html', async(req, res) => {
+  let info = "";
+  var userinfo = req.cookies.userinfo;
+  console.log(userinfo);
+  try{
+    userinfo = JSON.parse(userinfo);
+    console.log(userinfo);
+    var id = userinfo.id;
+  } catch(e) {
+    res.render('index', {msg: "invalid url, highly recommend you login first"});
   }
-  else {
-    if (req.query.key) res.render('machine');
-    else res.render('main');
-  }  next();
+  if(id) {
+    let sql = `SELECT * FROM user WHERE id = '${id}'`;
+    var result = await query(sql, null, pool1);
+    if (result.length==1) {
+      if (result[0].type=='1') {
+        res.render('adminCtrl');
+      }else {
+        res.render('index', {msg: 'sorry you are not authorized for updating database'});
+      }
+    } else {
+      res.render('index', {msg: "invalid user id"});
+    }
+  }
 });
 
 router.post('/logout', async(req, res) => {

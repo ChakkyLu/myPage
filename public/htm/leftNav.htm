@@ -97,3 +97,28 @@
     </ul>
   </div>
 </div>
+<div id ="rightNav">
+  <div class="right-content">
+    <ul class="right-content-result-ul">
+      <li class="content-result-li" ng-repeat="good in goods">
+        <div class="content-item">
+          <div class="content-item-spacing">
+          </div>
+          <div class="content-item-border">
+            <a class="content-item-border">
+              <img class="content-item-img" v-bind:src="good.img"/>
+            </a>
+          </div>
+          <div class="content-item-title">
+            <a class="content-item-label" href="#">
+              <h2 class="content-item-text">{{good.name}}</h2>
+            </a>
+            <a class="content-item-label" href="#">
+              <h2 class="content-item-text" style="color: red;">¥{{good.price}}</h2>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

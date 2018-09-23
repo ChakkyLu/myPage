@@ -4,7 +4,7 @@
   </a>
   <div class="container d-flex flex-md-row justify-content-between">
     <a class="nav-a-color py-2" href="/">主页</a>
-    <a class="nav-a-color py-2" href="/shopping.html">购物模版</a>
+    <a class="nav-a-color py-2" href="/shopping.html#!/home">购物模版</a>
     <!-- <a class="nav-a-color dropdown-toggle py-2" href="#" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a> -->
     <li class="dropdown" style="list-style-type:none;">
       <a class="py-2 nav-a-color dropdown-toggle" href="#" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a>
@@ -16,13 +16,15 @@
   </li>
     <a class="nav-a-color py-2" href=''>有关机器学习</a>
     <a class=" nav-a-color py-2" href=''>类blog模版</a>
+    <a class="nav-a-color py-2" href='/admin.html'>后台管理</a>
     <a class="py-2 pic-shrink" data-toggle="modal" data-target="#loginModal" ng-show="!logged">
       <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
     </a>
     <a class="py-2 pic-shrink" ng-if="logged">
+      <li class="dropdown" style="list-style-type:none;">
       <img src="images/loged.jpg" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" type="button" id="selfInfoButton" data-toggle="dropdown" aria-expanded="false">
       <div class="dropdown-menu dropdown-self"  aria-labelledby="selfInfoButton">
-        <div class="row-2">
+        <div>
           <img src="images/logo3.jpg" class="self-icon" width="60" height="60" viewBox="0 0 60 60">
           <h class="self-name">{{user.username}}</h>
           <button ng-if="user.isweibo" type="button" class="btn btn-quit1 btn-sm" style="font-size:12px;" disabled>已关联微博</button>
@@ -31,6 +33,7 @@
         </div>
       </div>
     </a>
+
   </div>
 </header>
 
