@@ -7,16 +7,23 @@
     <a class="nav-a-color py-2" href="/shopping.html#!/home">购物模版</a>
     <!-- <a class="nav-a-color dropdown-toggle py-2" href="#" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a> -->
     <li class="dropdown" style="list-style-type:none;">
-      <a class="py-2 nav-a-color dropdown-toggle" href="#" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a>
+      <a class="py-2 nav-a-color dropdown-toggle" onclick="return false;" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a>
       <div class="dropdown-menu" aria-labelledby="expand-game">
         <a class="dropdown-item" href="/game?title=flappyBall">Flappy Ball</a>
         <a class="dropdown-item" href="#">Another action</a>
         <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-  </li>
+      </div>
+    </li>
     <a class="nav-a-color py-2" href=''>有关机器学习</a>
     <a class=" nav-a-color py-2" href=''>类blog模版</a>
-    <a class="nav-a-color py-2" href='/admin.html'>后台管理</a>
+    <li class="dropdown" style="list-style-type:none;">
+      <a class="py-2 nav-a-color dropdown-toggle" onclick="return false;" data-toggle="dropdown" id="admin-control">后台管理</a>
+      <div class="dropdown-menu" aria-labelledby="admin-control">
+        <a class="dropdown-item" href="/admin.html#!/category">添加分类</a>
+        <a class="dropdown-item" href="/admin.html#!/store">添加商家</a>
+        <a class="dropdown-item" href="/admin.html#!/goods">添加产品</a>
+      </div>
+    </li>
     <a class="py-2 pic-shrink" data-toggle="modal" data-target="#loginModal" ng-show="!logged">
       <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
     </a>
@@ -28,8 +35,8 @@
           <img src="images/logo3.jpg" class="self-icon" width="60" height="60" viewBox="0 0 60 60">
           <h class="self-name">{{user.username}}</h>
           <button ng-if="user.isweibo" type="button" class="btn btn-quit1 btn-sm" style="font-size:12px;" disabled>已关联微博</button>
-          <button ng-if="!user.isweibo" type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button>
-          <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;">退出</button>
+          <button ng-if="!user.isweibo" type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()" style="font-size:12px;">关联微博</button>
+          <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;" ng-click="logout()">退出</button>
         </div>
       </div>
     </a>
@@ -48,8 +55,7 @@
         </div>
         <div class="modal-body">
           <!-- <h5 class="text-center" visibility="hidden">{{loginotice}}</h5> -->
-          <input type="email" class="form-control modal-input" placeholder="用户名／邮箱" ng-model="useremail" name="email" required>
-          <span>{{email.$valid}}</span>
+          <input type="text" class="form-control modal-input" placeholder="用户名／邮箱" ng-model="useremail" required>
           <input type="password" class="form-control modal-input my-2" placeholder="密码" ng-model="password" required>
           <div class="checkbox">
             <label class="ml-4">

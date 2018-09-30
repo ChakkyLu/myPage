@@ -202,24 +202,29 @@ router.get('/shopping.html', async(req, res) => {
   res.render('shopping');
 });
 
+router.get('/login.html', (req, res) => {
+  res.render('login');
+});
+
+
 router.get(['/main.html', '/'], async(req, res, next) =>{
   var seriesInfo;
   var userInfo = req.cookies.userinfo;
-  var _id;
+  var id;
   try{
     userInfo = JSON.parse(userInfo);
-    _id = userInfo._id;
+    id = userInfo.id;
   }catch(e) {
-    if(!_id){
+    if(!id){
       userInfo = {
-        _id: "",
-        _username: ""
+        id: "",
+        username: ""
       };
-      _id = "";
+      id = "";
     }
   }
-  if (_id) {
-    let sql = `SELECT * FROM user WHERE id = '${_id}'`;
+  if (id) {
+    let sql = `SELECT * FROM user WHERE id = '${id}'`;
     var result = await query(sql, null, pool1);
     if (result.length==1) {
       seriesInfo = {status:200, info: "get login status ok"};
@@ -307,7 +312,7 @@ router.get('/admin.html', async(req, res) => {
 router.post('/logout', async(req, res) => {
   var id = req.body.id;
   console.log(id);
-  // res.cookie("userinfo", null);
+  res.cookie("userinfo", null);
   res.json({
     data: "logout ok",
     code: 200,
@@ -341,6 +346,7 @@ router.get('/search.html',  async(req, res) => {
 router.post('/post_login', async(req, res) => {
   var username = req.body.username;
   var password = req.body.password;
+  console.log(username);
   var sql = `SELECT * FROM user WHERE username = '${username}' OR email = '${username}'`;
   var status = "";
   var code;
@@ -369,8 +375,8 @@ router.post('/post_login', async(req, res) => {
         else {
           var persistPeriod = 15*60*1000;
         }
-        // expiresTime.setTime(expiresTime.getTime() + persistPeriod);
-        // res.cookie('userInfo', JSON.stringify(userInfo), {maxAge: persistPeriod, httpOnly: true, expires: expiresTime.toGMTString()});
+        expiresTime.setTime(expiresTime.getTime() + persistPeriod);
+        res.cookie('userinfo', JSON.stringify(userInfo), {maxAge: persistPeriod, httpOnly: false, expires: expiresTime.toGMTString()});
       }
       else {
         code = 402; // wrong password;
@@ -393,6 +399,28 @@ router.post('/post_login', async(req, res) => {
   res.json(response);
 });
 
+router.get('/verifyLogin', async(req, res) => {
+  var seriesInfo;
+  var userInfo = req.cookies.userinfo;
+  var id;
+  try{
+    userInfo = JSON.parse(userInfo);
+    id = userInfo.id;
+    let sql = `SELECT * FROM user WHERE id = '${id}'`;
+    var result = await query(sql, null, pool1);
+    if (result.length==1) {
+      seriesInfo = {status:200, info: userInfo, msg: 'success'};
+    } else {
+      seriesInfo = {status:401, info: "incorrect id", msg: 'fail'};
+    }
+
+  }catch(e) {
+    seriesInfo = {status:401, info: "wrong cookies", msg: 'fail'};
+  }
+    console.log(seriesInfo);
+  res.json(seriesInfo);
+});
+
 router.post('/register', async(req, res) => {
   var reg_email = req.body.email;
   var reg_pwd = req.body.password;
@@ -409,7 +437,7 @@ router.post('/register', async(req, res) => {
   } else {
     var activateCode = generateCode();
     console.log(activateCode);
-    var insert_sql = `INSERT INTO user (username, password, signup_date, activate, activateCode) VALUES ('${reg_email}', '${reg_pwd}', '${reg_date}', 0, '${activateCode}')`;
+    var insert_sql = `INSERT INTO user (email, password, signup_date, activate, activateCode) VALUES ('${reg_email}', '${reg_pwd}', '${reg_date}', 0, '${activateCode}')`;
     var inResult = await query(insert_sql, null, pool1);
     response = {
       status: 'success',
@@ -431,16 +459,19 @@ router.post('/register', async(req, res) => {
       }
     });
   }
+  console.log(response);
   res.json(response);
-  return;
+  // res.render('index', {msg: "The activate email has been sent to you, please check your email and verify yourself before next signing in."});
 });
 
 router.get('/register.html', async(req, res) => {
   var userMail = req.query.username;
   var activateCode = req.query.activateCode;
   if (userMail && activateCode) {
-    var sql = `SELECT * FROM user WHERE username = '${userMail}'`;
-    var result = await query(sql);
+    var sql = `SELECT * FROM user WHERE email = '${userMail}'`;
+    console.log(sql);
+    var result = await query(sql, null, pool1);
+    console.log(result);
     if (result.length == 0){
       res.render('index', {msg: "无效的网址"});
     } else {
@@ -452,7 +483,7 @@ router.get('/register.html', async(req, res) => {
         } else {
           var curId = result[0].id;
           var update_sql = `UPDATE user SET activate = 1 WHERE id = ${curId}`;
-          var updateResult = await query(update_sql);
+          var updateResult = await query(update_sql, null, pool1);
           res.render('index', { msg: `您已经注册成功，以后可以使用${userMail}登陆`});
         }
       }

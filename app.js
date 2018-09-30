@@ -6,6 +6,7 @@ var logger = require('morgan');
 var ejs = require('ejs');
 var mainRouter = require('./routes/main');
 var usersRouter = require('./routes/users');
+var manageRouter = require('./routes/manage');
 var app = express();
 var vue = require('vue');
 app.use(express.static(path.join(__dirname, '/dist')));
@@ -23,7 +24,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/', mainRouter);
 app.use('/user', usersRouter);
-
+app.use('/gtd', manageRouter);
 app.use(function (req, res, next) {
   next();
 })

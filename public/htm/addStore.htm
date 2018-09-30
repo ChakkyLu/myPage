@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-8 order-md-1">
+    <h4 class="mb-3">商铺信息</h4>
+    <form class="needs-validation" novalidate="">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="firstName">商铺名称</label>
+          <input type="text" class="form-control" ng-model="storeName" placeholder="" value="" required="">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="lastName">店铺owner账号</label>
+          <input type="text" class="form-control" ng-model="ownerName" placeholder="" value="" required="">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="phonenumber">联系电话</label>
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="phone" placeholder="phonenumber" required="">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="address">联系地址</label>
+        <input type="text" class="form-control" ng-model="address" placeholder="" required="">
+        <div class="invalid-feedback">
+          Please enter your shipping address.
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5 mb-3">
+          <label for="country">商铺类型</label>
+          <select class="btn btn-nav-search" ng-options="y.name for y in catergory track by y.id" ng-model="storetype">
+          </select>
+        </div>
+      <hr class="mb-4">
+      <hr class="mb-4">
+      <button class="btn btn-primary btn-lg btn-block" type="submit" ng-click="addStore()">确定注册商户</button>
+    </form>
+  </div>
+</div>

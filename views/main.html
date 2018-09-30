@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="cn">
+<html lang="zh">
 
 <head>
   <meta charset='utf-8'>
@@ -7,21 +7,112 @@
   <meta name="description" content>
   <meta name="author" content>
   <link rel="icon" href="../images/icon.png">
-  <title>Riku HomePage</title>
+  <title>世界是旋转的</title>
   <!-- Bootstrap core CSS-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/components.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.min.js"></script> -->
+
+  <script>
+    $(document).ready(function(){
+        var id = $('#uinfo').html();
+        if (id) {
+          $('#logged').show();
+          $('#hover-login').hide();
+        }else {
+          $('#logged').hide();
+          $('#hover-login').show();
+        }
+        $('#logged').hover(function() {
+          $('.app_icon').show();
+        }, function() {
+          $('.app_icon').hide();
+        });
+    });
+  </script>
+
+
 
 </head>
 
 <body>
-  <div ng-app="nav" >
-    <top-nav></top-nav>
+  <div>
+    <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+      <h2 hidden id="uinfo"><%=userInfo.id%></h2>
+      <a class="navbar-brand mr-0 mr-md-2" href='#'>
+        <svg class="d-block" width="36" height="36" viewBox="0 0 612 612" xmlns="http://www.w3.org/2000/svg" focusable="false"><title>Rikuki</title><path fill="currentColor" d="M510 8a94.3 94.3 0 0 1 94 94v408a94.3 94.3 0 0 1-94 94H102a94.3 94.3 0 0 1-94-94V102a94.3 94.3 0 0 1 94-94h408m0-8H102C45.9 0 0 45.9 0 102v408c0 56.1 45.9 102 102 102h408c56.1 0 102-45.9 102-102V102C612 45.9 566.1 0 510 0z"></path><path fill="currentColor" d="M196.77 471.5V154.43h124.15c54.27 0 91 31.64 91 79.1 0 33-24.17 63.72-54.71 69.21v1.76c43.07 5.49 70.75 35.82 70.75 78 0 55.81-40 89-107.45 89zm39.55-180.4h63.28c46.8 0 72.29-18.68 72.29-53 0-31.42-21.53-48.78-60-48.78h-75.57zm78.22 145.46c47.68 0 72.73-19.34 72.73-56s-25.93-55.37-76.46-55.37h-74.49v111.4z"></path></svg>
+      </a>
+      <div class="container d-flex flex-md-row justify-content-between">
+        <a class="nav-a-color py-2" href="/">主页</a>
+        <a class="nav-a-color py-2" href="/shopping.html#!/home">购物模版</a>
+        <li class="dropdown" style="list-style-type:none;">
+          <a class="py-2 nav-a-color dropdown-toggle" href="#" data-toggle="dropdown" id="expand-game">Canvas游戏demo</a>
+          <div class="dropdown-menu" aria-labelledby="expand-game">
+            <a class="dropdown-item" href="/game?title=flappyBall">Flappy Ball</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <a class="nav-a-color py-2" href=''>有关机器学习</a>
+        <a class=" nav-a-color py-2" href='/gtd/main.html'>时间管理</a>
+        <li class="dropdown" style="list-style-type:none;">
+          <a class="py-2 nav-a-color dropdown-toggle" onclick="return false;" data-toggle="dropdown" id="admin-control">后台管理</a>
+          <div class="dropdown-menu" aria-labelledby="admin-control">
+            <a class="dropdown-item" href="/admin.html#!/category">添加分类</a>
+            <a class="dropdown-item" href="/admin.html#!/store">添加商家</a>
+            <a class="dropdown-item" href="/admin.html#!/goods">添加产品</a>
+          </div>
+        </li>
+        <a class="py-2 pic-shrink" data-toggle="modal" data-target="#loginModal" id="hover-login" style="display:none;">
+          <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
+        </a>
+
+        <li class="dropdown" style="list-style-type:none;display:none;" id="logged">
+          <img src="images/loged.jpg" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" type="button" id="selfInfoButton" data-toggle="dropdown" aria-expanded="false">
+          <div class="dropdown-menu dropdown-self"  aria-labelledby="selfInfoButton">
+            <img src="images/logo3.jpg" class="self-icon" width="60" height="60" viewBox="0 0 60 60">
+            <h class="self-name"><%=userInfo.username%></h>
+            <% if (userInfo.isweibo) { %>
+              <button type="button" class="btn btn-quit1 btn-sm" style="font-size:12px;" disabled>已关联微博</button>
+            <% } else { %>
+              <button type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button>
+            <% } %>
+            <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;">退出</button>
+          </div>
+      </li>
+
+      </div>
+    </header>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+      <div class="modal-dialog modal-dialog-centered modal-siginin" role="document">
+          <div class="modal-content login-modal">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">请登陆账号</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="email" class="form-control modal-input" placeholder="用户名／邮箱" name="email" id="username" required>
+              <input type="password" class="form-control modal-input my-2" placeholder="密码" id="password" required>
+              <div class="checkbox">
+                <label class="ml-4">
+                  <input type="checkbox" ng-model="remembered" id="rempwd"/> 记住密码
+                </label>
+              </div>
+              <hr>
+                <button class="btn btn-login btn-block" onclick="checkLogin()"> 登陆 </button>
+                <p> 还没有账号? </p>
+                <button class="btn btn-signup btn-block" onclick="signup()"> 注册 </button>
+                <p> 或者使用微博登录 (由于微应用审核中，该功能日后开启)</p>
+                <button class="btn btn-weibo btn-block" onclick="associateWeibo()" disabled> 关联微博 </button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <div class="text-center banner-cart-intro container-fluid">
       <div class="row">
         <div id="ebay-icon" class="ebay-icon col">
@@ -48,17 +139,60 @@
             <div class="shadow"></div>
           </div>
         </div>
-        <div class="ebay-intro col">
+        <div class="ebay-intro col" style="display:block; overflow:hidden">
           <h1 class="ebay-intro-h"> 购物模版</h1>
-          <label class="ebay-intro-label"> 参考<em>amazon</em>制作购物页面，基于<em>angularJS</em>，后端<em>nodeJS</em></label>
+          <label class="ebay-intro-label" style="display:block;"> 参考<em>amazon</em>制作购物页面，基于<em>angularJS</em>，后端<em>nodeJS</em></label>
           <div class="know-more">
-            <div class="icon-cart col">
+            <div class="icon-cart col-4">
               <div class="cart-line-1" style="background-color: #E5E9EA"></div>
               <div class="cart-line-2" style="background-color: #E5E9EA"></div>
               <div class="cart-line-3" style="background-color: #E5E9EA"></div>
               <div class="cart-wheel" style="background-color: #E5E9EA"></div>
             </div>
-            <a class="know-more-h col" style="display:inline-block" href="/shopping.html#!/home">了解详情</a>
+            <a class="know-more-h col-8"href="/shopping.html#!/home">了解详情</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="text-center banner-cart-intro container-fluid">
+      <div class="row">
+        <div id="ebay-icon" class="ebay-icon col">
+          <div class="screen monitor">
+            <div class="icon-cart" style="float: left">
+              <div class="cart-line-1" style="background-color: #E5E9EA"></div>
+              <div class="cart-line-2" style="background-color: #E5E9EA"></div>
+              <div class="cart-line-3" style="background-color: #E5E9EA"></div>
+              <div class="cart-wheel" style="background-color: #E5E9EA"></div>
+            </div>
+          </div>
+          <div class="laptop">
+            <div class="content">
+              <div class="icon-cart laptop-icon-cart" style="float: left">
+                <div class="cart-line-1" style="background-color: #E5E9EA"></div>
+                <div class="cart-line-2" style="background-color: #E5E9EA"></div>
+                <div class="cart-line-3" style="background-color: #E5E9EA"></div>
+                <div class="cart-wheel" style="background-color: #E5E9EA"></div>
+              </div>
+              <ul class="txt txt-laptop">
+              </ul>
+            </div>
+            <div class="btm"></div>
+            <div class="shadow"></div>
+          </div>
+        </div>
+        <div class="ebay-intro col" style="display:block; overflow:hidden">
+          <h1 class="ebay-intro-h"> 购物模版</h1>
+          <label class="ebay-intro-label" style="display:block;"> 参考<em>amazon</em>制作购物页面，基于<em>angularJS</em>，后端<em>nodeJS</em></label>
+          <div class="know-more">
+            <div class="icon-cart col-4">
+              <div class="cart-line-1" style="background-color: #E5E9EA"></div>
+              <div class="cart-line-2" style="background-color: #E5E9EA"></div>
+              <div class="cart-line-3" style="background-color: #E5E9EA"></div>
+              <div class="cart-wheel" style="background-color: #E5E9EA"></div>
+            </div>
+            <a class="know-more-h col-8"href="/shopping.html#!/home">了解详情</a>
           </div>
         </div>
       </div>
@@ -68,8 +202,8 @@
   </div>
   </div>
 
-  <script src="javascripts/mainApp.js"></script>
-  <script src="javascripts/mainCtrl.js"></script>
+  <!-- <script src="javascripts/mainApp.js"></script>
+  <script src="javascripts/mainCtrl.js"></script> -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

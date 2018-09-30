@@ -1,5 +1,6 @@
 function checkLogin() {
   window.event.returnValue=false;
+  jQuery.noConflict();
   var username = $('#username').val();
   var password = $('#password').val();
   if (password == "") {
@@ -13,7 +14,6 @@ function checkLogin() {
       rempwd: Number($('#rempwd')[0]['checked'])
     },
     function(data, status) {
-      jQuery.noConflict();
       console.log(data);
       switch (data.code) {
         case 401:
@@ -99,10 +99,9 @@ function checkreg() {
   return 0;
 }
 
-$('.btn-quit').click(function() {
+function logout() {
   var id = $('#uinfo').html();
   id = parseInt(id);
-  console.log("ahah");
   $.post('/logout',
     {
       id: id
@@ -112,7 +111,7 @@ $('.btn-quit').click(function() {
       window.event.returnValue = false;
       window.location.reload();
     });
-});
+}
 
 function associateWeibo() {
   window.event.returnValue = false;

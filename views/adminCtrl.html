@@ -7,7 +7,7 @@
   <meta name="description" content>
   <meta name="author" content>
   <link rel="icon" href="../images/icon.png">
-  <title>Riku HomePage</title>
+  <title>世界是旋转的</title>
   <!-- Bootstrap core CSS-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
@@ -19,20 +19,22 @@
 
 </head>
 <body>
-  <div class="container" ng-app="nav">
+  <div ng-app="admin">
       <top-nav></top-nav>
       <div class="py-5 text-center">
-        <h2>添加商品分类</h2>
-        <p class="lead">添加商品分类，html参考Bootstrap</p>
+        <h2>添加分类/商户/产品</h2>
+        <p class="lead">html参考Bootstrap</p>
       </div>
-      <add-item></add-item>
+      <div ui-view>
+      </div>
+      <!-- <add-item></add-item> -->
   </div>
   <script src="javascripts/mainApp.js"></script>
   <script src="javascripts/mainCtrl.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <script type="Application/javascript" src="javascripts/main.js"></script>
+  <!-- <script type="Application/javascript" src="javascripts/main.js"></script> -->
 </body>
 
 </html>

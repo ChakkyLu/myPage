@@ -10,14 +10,8 @@
     <!-- Bootstrap core CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/components.css"
+    <link rel="stylesheet" type="text/css" href="stylesheets/components.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <style type="text/css" abt="234"></style>
-    <% if (userInfo.weiboToken) { %>
-      <script>
-        $('#modal-signin').show();
-      </script>
-    <% } %>
     <script>
       $(document).ready(function(){
           var id = $('#uinfo').html();
@@ -48,7 +42,7 @@
   </head>
   <body>
     <nav class="site-header sticky-top py-1">
-      <h2 hidden id="uinfo"><%=userInfo._id%></h2>
+      <h2 hidden id="uinfo"><%=userInfo.id%></h2>
       <div class="container d-flex flex-md-row justify-content-between">
         <a class="py-2" href='#'>
           <img src="images/icon.png" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -65,25 +59,25 @@
         </li>
         <a class="py-2 d-md-inline-block nav-a-color" href="/machine?key=price">Machine</a>
         <a class="py-2 d-md-inline-block nav-a-color" href='https://api.weibo.com/oauth2/authorize?client_id=1606107874&response_type=code&redirect_uri=http://www.rikuki.cn/main.html' id="associate-weibo">Weibo</a>
-        <!-- <a class="py-2" href='login.html'>
-          <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
-        </a> -->
-        <a class="py-2" data-toggle="modal" data-target="#loginModal" id="hover-login">
+        <a class="py-2" href='login.html' id="hover-login">
           <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
         </a>
+        <!-- <a class="py-2" data-toggle="modal" data-target="#loginModal" id="hover-login">
+          <img src="images/login.png" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor">
+        </a> -->
         <a class="py-2" id="logged" style="display:none">
           <img src="images/loged.jpg" width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" type="button" id="selfInfoButton" data-toggle="dropdown" aria-expanded="false">
           <div class="dropdown-menu dropdown-self"  aria-labelledby="selfInfoButton">
             <div class="row-2">
               <img src="images/logo3.jpg" class="self-icon" width="60" height="60" viewBox="0 0 60 60">
-              <h class="self-name"><%=userInfo._username%></h>
+              <h class="self-name"><%=userInfo.username%></h>
               <% if (userInfo.isweibo) { %>
                 <button type="button" class="btn btn-quit1 btn-sm" style="font-size:12px;" disabled>已关联微博</button>
               <% } else { %>
                 <button type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button>
               <% } %>
               <!-- <button type="button" class="btn btn-quit1 btn-sm" onclick="associateWeibo()">关联微博</button> -->
-              <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;">退出</button>
+              <button type="button" class="btn btn-quit btn-sm" style="font-size:12px; margin-left:6.5rem!important;" onclick="logout()">退出</button>
             </div>
             <!-- <div class="row-2">
               <div class="row"><button type="button" class="btn btn-quit1 btn-sm">退出</button></div>
@@ -93,13 +87,13 @@
         </a>
       </div>
     </nav>
-    <div class="container" id="left-nav-bar">
+    <!-- <div class="container" id="left-nav-bar">
       <h3 class="large-title"> 显示结果 </h3>
       <ul class="show-result-ul">
         <li class="cell-result-li">全部分类</li>
         <li class="cell-result-li">电器</li>
       </ul>
-    </div>
+    </div> -->
 
     <div class="text-center">
       <div class="col-md-5 p-lg-5 mx-auto my-5">
@@ -161,7 +155,7 @@
       </div>
     </div>
 
-
+<!--
     <div class="top-nav-bar clearfix" id="navbar">
       <div class="nav-top-left">
         <a class="nav-left-logo" href="#">
@@ -389,8 +383,8 @@
       </div>
       <hr>
       <span class="footer-copyright"> © 2018-2019 rikuki.cn 版权所有 </span>
-    </div>
-    
+    </div> -->
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

@@ -28,21 +28,26 @@
       <div class="check-list-container" >
         <li ng-repeat="district in districts">
           <input class="form-check-input check-list-box" type="checkbox" value=""/>
-          <label class="form-check-label check-list-label" v-bind:value="index"> {{district.text}} </label>
+          <label class="form-check-label check-list-label" v-bind:value="district.id"> {{district.text}} </label>
         </li>
-        <!-- <li>
-          <input class="form-check-input check-list-box" type="checkbox" value=""/>
-          <label class="form-check-label check-list-label" v-bind:value="2"> 江浙沪 </label>
+        <li ng-repeat="district in chosencity">
+          <input class="form-check-input check-list-box" type="checkbox" value="" checked/>
+          <label class="form-check-label check-list-label" v-bind:value="district.id"> {{district.text}} </label>
         </li>
-        <li>
-          <input class="form-check-input check-list-box" type="checkbox" value=""/>
-          <label class="form-check-label check-list-label"  v-bind:value="3"> 北京 </label>
-        </li> -->
         <li class="check-list-li">
             <span class="form-check-input check-list-more"> >> </span>
-            <div class="dropright">
-              <label class="form-check-label check-list-label-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  其他城市 </label>
-            </div>
+            <div class="dropdown">
+              <label class="form-check-label check-list-label-more" data-toggle="dropdown" ng-click="othercity()" >  其他城市 </label>
+              <div class="dropdown-menu">
+                <div>
+                  <ul style="margin-left:-2rem">
+                    <li ng-repeat="district in districts2" style="display:inline-block; padding:4px">
+                      <input class="" type="checkbox" value=""/ ng-click="addDistrict(district)">
+                      <label class="form-check-label check-list-label" v-bind:value="district.id"> {{district.text}} </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
         </li>
       </div>
     </ul>
@@ -106,7 +111,7 @@
           </div>
           <div class="content-item-border">
             <a class="content-item-border">
-              <img class="content-item-img" v-bind:src="good.img"/>
+              <img class="content-item-img" ng-src="{{good.img}}"/>
             </a>
           </div>
           <div class="content-item-title">
