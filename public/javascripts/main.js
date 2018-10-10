@@ -38,7 +38,7 @@ function checkLogin() {
           break;
       }
     });
-  return 0;
+  return -1;
 }
 
 function searchArticle() {

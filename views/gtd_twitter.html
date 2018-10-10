@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<!--
+	Strongly Typed 1.0 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>世界是旋转的</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!-- <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700" rel="stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/blog.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+
+  <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+</head>
+
+<body class="no-sidebar">
+  <div id="page-wrapper">
+    <section id="header">
+      <div class="container">
+
+        <!-- Logo -->
+          <h1 id="logo"><a href="main.html">虽说世界是旋转的</a></h1>
+          <p>两岸猿声啼不住，轻舟已过万重山</p>
+
+        <!-- Nav -->
+          <nav id="nav">
+            <ul>
+              <li><a class="icon fa-home" href="main.html"><span>主页</span></a></li>
+              <li>
+                <a class="icon fa-bar-chart-o" href="blog.html"><span>文字</span></a>
+                <ul>
+                  <li><a href="#">回忆录</a></li>
+                  <li><a href="#">小说</a></li>
+                  <li>
+                    <a href="#">记录</a>
+                    <ul>
+                      <li><a href="#">周记</a></li>
+                      <li><a href="#">日记</a></li>
+                      <li><a href="#">月刊</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">胡言乱语</a></li>
+                </ul>
+              </li>
+              <li><a class="icon fa-cog" href="left-sidebar.html"><span>设置</span></a></li>
+              <li><a class="icon fa-retweet" href="right-sidebar.html"><span>任务</span></a></li>
+              <li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
+            </ul>
+          </nav>
+
+      </div>
+    </section>
+    <section style="background-color:#fff;">
+      <div class="container">
+        <div id="posts">
+          <ul class="actions" style="margin:0; padding:20px 0 0 0; text-align:center" >
+            <li style="margin-left:auto; margin-right:auto; display:inline-block;"><a v-on:click="showModal" class="button icon fa-file">新的碎碎念</a></li>
+          </ul>
+          <div id="newTwit" class="modal">
+            <div class="modal-content">
+              <span class="close" v-on:click="close">&times;</span>
+              <div class="modal-header">
+                <h3 style="margin-bottom:0; color:#ed786a"> 发表新的碎碎念 </h3>
+              </div>
+              <div class="modal-body">
+                <textarea name="content" placeholder="" v-model="newcontent"  class="std-input edit-twit"></textarea>
+              </div>
+              <div class="modal-footer">
+                <span v-if="newcontent.length>140"> 字数超过140的限制，憋写碎碎念，写随笔吧～ </span>
+                <button style="margin-left:auto; margin-right:0; cursor:pointer; margin-top:10px" v-on:click="newTwit" v-bind:class="{disabled: newcontent.length<=0 || newcontent.length>140 }">发表新的碎碎念</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="hint" class="modal">
+            <div class="modal-content">
+              <span class="close" v-on:click="close">&times;</span>
+              <div class="modal-body">
+                <h4> 操作成功，即将返回</h4>
+              </div>
+            </div>
+          </div>
+
+          <ul class="posts">
+            <li style="list-style: none;" class="post-li" v-for="twit in twits" v-if="twits.length">
+              <div class="post-container">
+                <div class="content-item">
+                  <div class="post-header">
+                    <article class="box post">
+                      <header>
+                        <h2 style="margin-bottom:1rem;">{{twit.created}}</h2>
+                      </header>
+                      <span class="image featured" style="margin-bottom:1rem;"><img src="../images/pic04.jpg" alt="" /></span>
+                      <p class="post-content" style="white-space: pre-line;">{{twit.content}}</p>
+                      <a class="icon fa-twitter-square post-flag" style="display:block; border-bottom:none; padding:5px;"> <span > {{twit.category}} </span></a>
+                      <a class="icon fa-backward del-twit" style="display:block; border-bottom:none; padding:5px;" v-on:click="delTwit(twit.id)"> <span> 删除该条 </span> </a>
+                    </article>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <h1 v-if="!twits.length">加载中</h1>
+          </ul>
+
+          <ul class="pagination modal-2">
+            <li> <a class="prev" v-on:click="turnPage(-2)"> &laquo; </a> </li>
+            <li v-for="(page, index) in pages" v-on:click="turnPage(page)">
+              <a v-bind:class="{active: pageSelect[index]}">{{page}}</a>
+            </li>
+            <li v-if="pages[pages.length-1]<totalPage" disabled><a>...</a></li>
+            <li v-if="pages[pages.length-1]<totalPage" v-on:click="turnPage(-3)"><a v-bind:class="{active: finalCheck}">{{totalPage}}</a></li>
+            <li><a class="next" v-on:click="turnPage(-1)"> &raquo;</a></li>
+          </ul><br>
+      </div>
+    </div>
+  <section>
+</div>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.dropotron.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/triffle.js"></script>
+</body>

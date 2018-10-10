@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>世界是旋转的</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/blog.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	</head>
+  <body class="left-sidebar is-preload">
+		<div id="page-wrapper">
+				<section id="header">
+					<div class="container">
+
+						<!-- Logo -->
+							<h1 id="logo"><a href="main.html">虽说世界是旋转的</a></h1>
+							<p>两岸猿声啼不住，轻舟已过万重山</p>
+
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li><a class="icon fa-home" href="main.html"><span>主页</span></a></li>
+									<li>
+										<a href="#" class="icon fa-bar-chart-o" href="#"><span>文字</span></a>
+										<ul>
+											<li><a href="#">回忆录</a></li>
+											<li><a href="#">小说</a></li>
+											<li>
+												<a href="#">记录</a>
+												<ul>
+													<li><a href="#">周记</a></li>
+													<li><a href="#">日记</a></li>
+													<li><a href="#">月刊</a></li>
+												</ul>
+											</li>
+											<li><a href="triffle.html">胡言乱语</a></li>
+										</ul>
+									</li>
+									<li><a class="icon fa-cog" href="left-sidebar.html"><span>设置</span></a></li>
+									<li><a class="icon fa-retweet" href="right-sidebar.html"><span>任务</span></a></li>
+									<li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
+                </ul>
+							</nav>
+
+					</div>
+				</section>
+				<section id="main">
+					<div class="container">
+						<div class="row">
+							<a class="icon fa-pencil" style="margin-left:auto; margin-right:0; padding:0;" href="editBlog.html"><span>写新文章</span></a>
+						</div>
+						<div class="row" id="mainHome">
+								<div id="sidebar" class="col-4 col-12-medium">
+										<section>
+											<ul class="divided">
+												<h2 v-if="twits==null" style=""> 加载中 </h2>
+												<li v-for="(twit,index) in twits">
+														<article class="box excerpt">
+															<header>
+																<span class="date">{{twit.created}}</span>
+																<h3 style="margin-bottom:0.5rem;"><a href="#">{{twit.category}}</a></h3>
+															</header>
+															<p class="twit-text" v-if ="!clicked[index]">{{twit.content}} <a class="twit-op" v-if="twit.content.length != twit.fullText.length" v-on:click="expand(index)">   (展开) </a> </p>
+															<p class="twit-text" v-if ="clicked[index]">{{twit.fullText}} <a class="twit-op" v-on:click="shrink(index)"> (收起) </a> </p>
+														</article>
+
+												</li>
+											</ul>
+										</section>
+										<ul class="actions">
+											<li><a href="/gtd/triffle.html" class="button icon fa-file">全部碎碎念</a></li>
+										</ul>
+
+								</div>
+							<!-- Content -->
+								<div id="content" class="col-8 col-12-medium imp-medium main-content">
+                  <h2 v-if="items==null"> 加载中 </h2>
+                  <ul class="divided" v-if="items!=null">
+                    <li v-for="item in items">
+  										<article class="box post">
+  											<header>
+  												<h2 style="margin-bottom:1rem;">{{item.title}}</h2>
+                          <h3 v-if="item.subtitle"><i>{{item.subtitle}}</i></h4>
+                          <h3><small>{{item.created}}</small></h3>
+  											</header>
+  											<span class="image featured"><img src="../images/pic04.jpg" alt="" /></span>
+  											<p style="white-space: pre-line;">{{item.content}}</p>
+												<div class="row">
+													<a class="icon fa-shower read-more" v-on:click="readMore(item.id)"  style="margin-left:auto; margin-right:0; padding:0;"><span>查看全部</span></a>
+												</div>
+                      </article>
+                    </li>
+                  </ul>
+                  <ul class="pagination modal-2">
+                    <li> <a class="prev" v-on:click="turnPage(-2)"> &laquo; </a> </li>
+                    <li v-for="(page, index) in pages" v-on:click="turnPage(page)">
+                      <a v-bind:class="{active: pageSelect[index]}">{{page}}</a>
+                    </li>
+										<li v-if="pages[pages.length-1]<totalPage" disabled><a>...</a></li>
+										<li v-if="pages[pages.length-1]<totalPage" v-on:click="turnPage(-3)"><a v-bind:class="{active: finalCheck}">{{totalPage}}</a></li>
+                    <li><a class="next" v-on:click="turnPage(-1)"> &raquo;</a></li>
+                  </ul><br>
+								</div>
+
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<section id="footer">
+					<div class="container">
+						<header>
+              <h2>一看你就有话想对我说  <strong>快来吐槽吧</strong>！</h2>
+						</header>
+						<div class="row">
+							<div class="col-6 col-12-medium">
+								<section>
+									<form method="post" action="#">
+										<div class="row gtr-50">
+											<div class="col-6 col-12-small">
+												<input name="name" placeholder="姓名" type="text" />
+											</div>
+											<div class="col-6 col-12-small">
+												<input name="email" placeholder="邮箱" type="text" />
+											</div>
+											<div class="col-12">
+												<textarea name="message" placeholder="留言"></textarea>
+											</div>
+											<div class="col-12">
+												<a href="#" class="form-button-submit button icon fa-envelope">Send Message</a>
+											</div>
+										</div>
+									</form>
+								</section>
+							</div>
+							<div class="col-6 col-12-medium">
+								<section>
+                  <p>喜欢搞技术，喜欢女性向galgame，喜欢下雨天躲在被窝里看剧，喜欢没事写点回忆录，喜欢躲在浴缸里大哭<br/>
+									喜欢叶哥哥，也喜欢童大哥，喜欢阿叶的船到桥头自然直，也喜欢好的懦弱者抱团论</br>
+								丫鬟的身子，丫鬟的命，小姐的理想，丫鬟的能力</p>
+									<div class="row">
+										<div class="col-6 col-12-small">
+											<ul class="icons">
+												<li class="icon fa-home">
+                          柯南省家教市月刊区棋魂路青驱街道网优巷<br/>
+  												12183号通灵王小区<br/>
+  												12单元1号楼803室
+												</li>
+												<li class="icon fa-phone">
+													(086) 78762637872
+												</li>
+												<li class="icon fa-envelope">
+													<a href="#">luqi12183@gmail.com</a>
+												</li>
+											</ul>
+										</div>
+										<div class="col-6 col-12-small">
+											<ul class="icons">
+												<li class="icon fa-twitter">
+													<a href="#">twitter/@Likuki</a>
+												</li>
+												<li class="icon fa-instagram">
+													<a href="#">weibo/@麦伽顿</a>
+												</li>
+												<li class="icon fa-dribbble">
+													<a href="#">facebook.com/unkown</a>
+												</li>
+												<li class="icon fa-facebook">
+													<a href="#">google.com/likuki67</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+					<div id="copyright" class="container">
+						<ul class="links">
+              <li>&copy; Rikuki(2018-2019)</li>
+							<li>参考模版 <a href="https://html5up.net/strongly-typed">strongly-typed</a></li>
+							<li>作者 麦伽顿</li>
+						</ul>
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+      <script src="js/common.js"></script>
+			<script src="js/mainHome.js"></script>
+	</body>

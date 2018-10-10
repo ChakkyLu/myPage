@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<!--
+	Strongly Typed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <title>世界是旋转的</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=1040" />
+		<!-- <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/blog.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+
+						<!-- Logo -->
+            <h1 id="logo"><a href="main.html">虽说世界是旋转的</a></h1>
+            <p>两岸猿声啼不住，轻舟已过万重山</p>
+						<!-- Nav -->
+            <nav id="nav">
+              <ul>
+                <li><a class="icon fa-home" href="main.html"><span>主页</span></a></li>
+                <li>
+                  <a href="/gtd/blog.html" class="icon fa-bar-chart-o"><span>文字</span></a>
+                  <ul>
+                    <li><a href="#">回忆录</a></li>
+                    <li><a href="#">小说</a></li>
+                    <li>
+                      <a href="#">记录</a>
+                      <ul>
+                        <li><a href="#">周记</a></li>
+                        <li><a href="#">日记</a></li>
+                        <li><a href="#">月刊</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="/triffle">胡言乱语</a></li>
+                  </ul>
+                </li>
+                <li><a class="icon fa-cog" href="left-sidebar.html"><span>设置</span></a></li>
+                <li><a class="icon fa-retweet" href="right-sidebar.html"><span>任务</span></a></li>
+                <li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
+                <li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
+              </ul>
+            </nav>
+
+					</div>
+				</section>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container" >
+						<div id="blogctx">
+							<!-- Post -->
+								<article class="box post">
+                  <div class="" style="float:right; padding-left:20px;"><a class="icon fa-pencil" style="cursor:pointer;" v-on:click="edit(id)"><span>编辑文章</span></a></div>
+                  <div class="" style="float:right"><a class="icon fa-navicon" style="cursor:pointer;" v-on:click="deleteB(id)"><span>删除文章</span></a></div>
+                  <br>
+									<header>
+										<h2>{{title}}</h2>
+                    <h3>{{subtitle}}</h3>
+									</header>
+									<span class="image featured"><img src="../images/pic04.jpg" alt="" /></span>
+									<p style="white-space: pre-line;">{{content}}</p>
+                <hr>
+                  <h6>创作于 <em>{{created}}</em></h6>
+                  <h6>最后一次修改于 <em>{{modified}}</em></h6>
+                  <br>
+                  <span class="icon fa-envira">分类 <a> 无关痛痒</a></span>
+							    </article>
+						</div>
+					</div>
+				</section>
+
+			<!-- Footer -->
+      <section id="footer">
+        <div class="container">
+          <header>
+            <h2>一看你就有话想对我说  <strong>快来吐槽吧</strong>！</h2>
+          </header>
+          <div class="row">
+            <div class="col-6 col-12-medium">
+              <section>
+                <form method="post" action="#">
+                  <div class="row gtr-50">
+                    <div class="col-6 col-12-small">
+                      <input name="name" placeholder="姓名" type="text" />
+                    </div>
+                    <div class="col-6 col-12-small">
+                      <input name="email" placeholder="邮箱" type="text" />
+                    </div>
+                    <div class="col-12">
+                      <textarea name="message" placeholder="留言"></textarea>
+                    </div>
+                    <div class="col-12">
+                      <a href="#" class="form-button-submit button icon fa-envelope">Send Message</a>
+                    </div>
+                  </div>
+                </form>
+              </section>
+            </div>
+            <div class="col-6 col-12-medium">
+              <section>
+                <p>喜欢搞技术，喜欢女性向galgame，喜欢下雨天躲在被窝里看剧，喜欢没事写点回忆录，喜欢躲在浴缸里大哭<br/>
+                喜欢叶哥哥，也喜欢童大哥，喜欢阿叶的船到桥头自然直，也喜欢好的懦弱者抱团论</br>
+              丫鬟的身子，丫鬟的命，小姐的理想，丫鬟的能力</p>
+                <div class="row">
+                  <div class="col-6 col-12-small">
+                    <ul class="icons">
+                      <li class="icon fa-home">
+                        柯南省家教市月刊区棋魂路青驱街道网优巷<br/>
+                        12183号通灵王小区<br/>
+                        12单元1号楼803室
+                      </li>
+                      <li class="icon fa-phone">
+                        (086) 78762637872
+                      </li>
+                      <li class="icon fa-envelope">
+                        <a href="#">luqi12183@gmail.com</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-6 col-12-small">
+                    <ul class="icons">
+                      <li class="icon fa-twitter">
+                        <a href="#">twitter/@Likuki</a>
+                      </li>
+                      <li class="icon fa-instagram">
+                        <a href="#">weibo/@麦伽顿</a>
+                      </li>
+                      <li class="icon fa-dribbble">
+                        <a href="#">facebook.com/unkown</a>
+                      </li>
+                      <li class="icon fa-facebook">
+                        <a href="#">google.com/likuki67</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div id="copyright" class="container">
+          <ul class="links">
+            <li>&copy; Rikuki(2018-2019)</li>
+            <li>参考模版 <a href="https://html5up.net/strongly-typed">strongly-typed</a></li>
+            <li>作者 麦伽顿</li>
+          </ul>
+        </div>
+      </section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+      <script src="js/test.js"></script>
+
+	</body>
+</html>
