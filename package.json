@@ -4,17 +4,19 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./bin/www",
-    "dev": "node build/dev-server.js",
-    "build": "node build/webpack.config.js"
+    "dev": "browserify -t vueify -e public/gtd/js/mainHome.js -o public/gtd/js/bundle.js & babel-node ./bin/www",
+    "build": "node build/webpack.config.js",
+    "test": "node build/build.js"
   },
   "dependencies": {
     "JSON": "^1.0.0",
-    "browserify": "^16.2.2",
     "babel": {
       "presets": [
         "es2015"
       ]
     },
+    "browserify": "^16.2.2",
+    "browserify-hmr": "^0.3.6",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "cookies": "^0.7.1",
@@ -35,6 +37,7 @@
     "request-promise-any": "^1.0.5",
     "vue": "^2.5.17",
     "vueify": "^9.4.1",
+    "watchify": "^3.11.0",
     "webpack": "^4.17.2",
     "webpack-dev-server": "^3.1.7"
   },

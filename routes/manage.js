@@ -29,6 +29,9 @@ router.get('/editBlog.html', async(req, res) => {
 router.get("/triffle.html", (req,res) => {
   res.render('gtd_twitter.html');
 });
+router.get("/daily.html", (req,res) => {
+  res.render('gtd_daily.html');
+});
 router.post('/newBlog', async(req, res)=> {
   let url = "http://www.rikuki.cn/api/gtd/newBlog"
   let options = {

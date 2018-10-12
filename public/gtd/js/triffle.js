@@ -86,10 +86,10 @@ var posts = new Vue({
             modal = document.getElementById('hint');
             modal.style.display = "block";
             console.log(this.notification);
-            // setTimeout(function(){
-            //   modal.style.display = "none";
-            //   window.location.reload();
-            // }, 1000);
+            setTimeout(function(){
+              modal.style.display = "none";
+              window.location.reload();
+            }, 1000);
             break;
           default:
             this.notification = "发表错误，请重新操作！";

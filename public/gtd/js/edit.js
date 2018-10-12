@@ -1,5 +1,44 @@
+var myModal =  {
+  template: `<div id="selectSaved" class="modal">
+    <div class="modal-content">
+      <span class="close" v-on:click="close">&times;</span>
+      <div class="modal-header">
+        <h3 style="margin-bottom:0; color:#ed786a"> 选择载入草稿 </h3>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li style="list-style:none;" v-for="(item, index) in items">
+            <input type="radio" style="-webkit-appearance:radio; display:inline;"
+              v-model="selected" name="drone" :value="index" checked/>
+            <label for="time">{{item.created}}</label>
+            <label for="title">{{item.title}}</label>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+      <button style="margin-left:auto; margin-right:0; cursor:pointer; margin-top:10px" v-on:click="$emit('load-save', selected)">载入</button>
+      </div>
+    </div>
+  </div>`,
+  data() {
+    return {
+      selected: 0
+    }
+  },
+  props: ['items'],
+  methods: {
+    close: function() {
+      let modal = document.getElementsByClassName('modal');
+      modal[0].style.display = 'none';
+    }
+  }
+}
+
 var ub = new Vue({
   el: '#update-blog',
+  components: {
+    'my-modal': myModal
+  },
   mounted: async function() {
     let href = window.location.href;
     if (href.indexOf('?') != -1) {
@@ -37,10 +76,41 @@ var ub = new Vue({
     newType: "",
     autoSaveId: null,
     autoSaveTime: '',
-    lastEdit: {title: '', content: '', subtitle: ''}
-
+    lastEdit: {title: '', content: '', subtitle: ''},
+    savedItems: [],
+    loadSave: null,
+    image: null
   },
   methods: {
+    // onFileChange(e) {
+    //  var files = e.target.files || e.dataTransfer.files;
+    //  if (!files.length)
+    //    return;
+    //  this.createImage(files[0]);
+    //  let data = new FormData();
+    //  data.append('file', files[0]);
+    //  let url = "http://www.rikuki.cn/api/gtd/uploadIMG";
+    //  $.ajax({
+    //    url: url,
+    //    type: 'POST',
+    //    data: data,
+    //    success: function (data) {
+    //        console.info(data);
+    //    }
+    //  });
+    // },
+    // createImage(file) {
+    //  var image = new Image();
+    //  var reader = new FileReader();
+    //  var vm = this;
+    //  reader.onload = (e) => {
+    //     vm.image = e.target.result;
+    // };
+    //   reader.readAsDataURL(file);
+    // },
+    // removeImage: function (e) {
+    //   this.image = '';
+    // },
     autoSave: async function(){
       console.log("ahhaha");
       if (this.title || this.content) {
@@ -62,7 +132,28 @@ var ub = new Vue({
         this.autoSaveTime = res.info.time;
       }
     },
-    saveArticle: function () {
+    showModal: function(name) {
+      let modal = document.getElementById(name);
+      modal.style.display = 'block';
+    },
+    load: function(index) {
+      // console.log(index);
+      this.close();
+      this.title = this.savedItems[index].title;
+      this.subtitle = this.savedItems[index].subtitle;
+      this.content = this.savedItems[index].content;
+    },
+    readSaved: async function(name) {
+      this.showModal(name);
+      let url = "http://www.rikuki.cn/api/gtd/getSaved?id=19";
+      let res = await sendReq(url);
+      this.savedItems = res;
+    },
+    close: function() {
+      let modal = document.getElementsByClassName('modal');
+      modal[0].style.display = 'none';
+    },
+    saveArticle: async function () {
       if (this.title && this.content) {
         let title = this.title;
         let uid = 19;
@@ -70,6 +161,11 @@ var ub = new Vue({
         let subtitle = this.subtitle ? this.subtitle : "";
         let type = this.type;
         let url;
+        if (this.newType && this.type == -1) {
+          let url = "http://www.rikuki.cn/api/gtd/addNC?belong=0&name=" + this.newType;
+          let res = await sendReq(url);
+          type = res.type;
+        }
         if(this.status=="new") {
           let url = "http://www.rikuki.cn/api/gtd/newBlog";
           $.post(url, {

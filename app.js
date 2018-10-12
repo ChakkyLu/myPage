@@ -25,9 +25,9 @@ app.use(express.static(__dirname + '/public'));
 app.use('/', mainRouter);
 app.use('/user', usersRouter);
 app.use('/gtd', manageRouter);
-app.use(function (req, res, next) {
-  next();
-})
+// app.use(function (req, res, next) {
+//   next();
+// })
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

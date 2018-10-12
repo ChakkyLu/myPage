@@ -25,9 +25,9 @@
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li><a class="icon fa-home" href="index.html"><span>主页</span></a></li>
+									<li><a class="icon fa-home" href="main.html"><span>主页</span></a></li>
 									<li>
-										<a href="#" class="icon fa-bar-chart-o"><span>文字</span></a>
+										<a href="blog.html" class="icon fa-bar-chart-o" ><span>文字</span></a>
 										<ul>
 											<li><a href="#">回忆录</a></li>
 											<li><a href="#">小说</a></li>
@@ -42,7 +42,7 @@
 											<li><a href="#">胡言乱语</a></li>
 										</ul>
 									</li>
-									<li><a class="icon fa-cog" href="left-sidebar.html"><span>设置</span></a></li>
+									<li><a class="icon fa-cog" href="daily.html"><span>日常</span></a></li>
 									<li><a class="icon fa-retweet" href="right-sidebar.html"><span>任务</span></a></li>
 									<li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
                   <li><a class="icon fa-sitemap" href="no-sidebar.html"><span>相册</span></a></li>
@@ -59,9 +59,9 @@
 						</header>
             <br>
 
-            <div class="col-12 col-12-medium">
+            <div class="col-12 col-12-medium" id="update-blog">
               <section>
-                <form method="post" id="update-blog">
+                <form method="post" >
 									<div style="text-align:center;" v-if="autoSaveTime">
 										<label style="padding:10px; margin-bottom:10px; color:rgba(0,0,0,.4);"> 文章自动保存于 <i> {{autoSaveTime}} </i></label>
 									</div>
@@ -81,25 +81,22 @@
                     </div>
                     <div class="col-2 col-12-small">
                       <a class="icon fa-save auto-save" v-on:click="autoSave">自动保存 </a>
+											<a class="icon fa-envelope" style="padding:0px;" v-on:click="readSaved('selectSaved')">读取草稿</a>
                     </div>
-                    <div class="col-12">
+									  <!-- <div v-if="!image">
+									    <h2>Select an image</h2>
+									    <input type="file" @change="onFileChange" enctype="multipart/form-data">
+									  </div>
+									  <div v-else>
+									    <img :src="image" />
+									    <button @click="removeImage">Remove image</button>
+									  </div> -->
+									  <div class="col-12">
                       <textarea name="content" placeholder="" v-model="content"  class="std-input edit-content"></textarea>
                     </div>
                     <div class="col-12">
                       <div class="row row-edit">
                         <span class="edit-span cate col-1">分类</span>
-                        <select name="category" class="edit-select" value="0" v-model="type">
-                          <option :value="articletype.id" v-for="articletype in types">{{articletype.text}}</option>
-                          <option value="-1">新建分类</option>
-                        </select>
-												<div class="col-3 edit-new-type" v-if="type==-1">
-													<input type="text" v-model="newType"/>
-												</div>
-                      </div>
-                    </div>
-										<div class="col-12">
-                      <div class="row row-edit">
-                        <span class="edit-span cate col-1">读取草稿</span>
                         <select name="category" class="edit-select" value="0" v-model="type">
                           <option :value="articletype.id" v-for="articletype in types">{{articletype.text}}</option>
                           <option value="-1">新建分类</option>
@@ -116,9 +113,12 @@
                   </div>
                 </form>
               </section>
+							<my-modal v-bind:items="savedItems" v-on:load-save="load"><my-modal>
             </div>
           </div>
+
         </section>
+
         <!-- Scripts -->
       </div>
       <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
