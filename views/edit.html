@@ -6,7 +6,8 @@
 		<meta name="keywords" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700" rel="stylesheet" type="text/css" /> -->
-    <link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" href="images/weblogo.png">
+		<link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/blog.css" />
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
@@ -14,15 +15,10 @@
   <body class="left-sidebar is-preload">
 		<div id="page-wrapper">
 
-			<!-- Header -->
 				<section id="header">
 					<div class="container">
-
-						<!-- Logo -->
 							<h1 id="logo"><a href="main.html">虽说世界是旋转的</a></h1>
 							<p>两岸猿声啼不住，轻舟已过万重山</p>
-
-						<!-- Nav -->
 							<nav id="nav">
 								<ul>
 									<li><a class="icon fa-home" href="main.html"><span>主页</span></a></li>
@@ -39,7 +35,7 @@
 													<li><a href="#">月刊</a></li>
 												</ul>
 											</li>
-											<li><a href="#">胡言乱语</a></li>
+											<li><a href="triffle.html">胡言乱语</a></li>
 										</ul>
 									</li>
 									<li><a class="icon fa-cog" href="daily.html"><span>日常</span></a></li>
@@ -83,14 +79,14 @@
                       <a class="icon fa-save auto-save" v-on:click="autoSave">自动保存 </a>
 											<a class="icon fa-envelope" style="padding:0px;" v-on:click="readSaved('selectSaved')">读取草稿</a>
                     </div>
-									  <!-- <div v-if="!image">
+									  <div v-if="!image">
 									    <h2>Select an image</h2>
 									    <input type="file" @change="onFileChange" enctype="multipart/form-data">
 									  </div>
 									  <div v-else>
 									    <img :src="image" />
 									    <button @click="removeImage">Remove image</button>
-									  </div> -->
+									  </div>
 									  <div class="col-12">
                       <textarea name="content" placeholder="" v-model="content"  class="std-input edit-content"></textarea>
                     </div>

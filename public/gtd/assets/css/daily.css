@@ -4,27 +4,31 @@
   font-weight:normal;
   font-style:normal;
 }
+@font-face {
+  font-family: xiaowei;
+  src: url("../fonts/xiaowei.otf");
+  font-weight:normal;
+  font-style:normal;
+}
 .main-part {
   position: relative;
   overflow: hidden;
   background: #fff;
   text-align: center;
   padding: 6em 0 6em 0;
-
 }
 .features {
   position: relative;
   overflow: hidden;
   background: #fff;
-  text-align: center;
-  padding: 3em 0;
-  width: 1200px !important;
-  margin: 0 auto;
+  padding: 6em 0;
 }
 .\34unit {
-  margin: 2% 0 2% 4%;
+  margin: 2% 0 2% 2%;
   float: left;
   width: 30.6666666667%;
+  padding: 15px 0 0 15px;
+  overflow: hidden;
 }
 .features .main-title {
   font-family: sentychalk;
@@ -36,4 +40,386 @@
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+}
+.main-line .icon {
+  float: left;
+  border-bottom: none;
+  transition: opacity 0.25s ease-in-out;
+  display: inline-block;
+}
+@media (max-width: 736px) {
+  :not(.persistent)>.row>:first-child, .row:not(.persistent)>:first-child {
+      margin-top: 0!important;
+  }
+  .row:not(.persistent)>.\34unit {
+    float: none!important;
+    width: 100%!important;
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+  .\34unit {
+    padding-bottom: 10px;
+    border-bottom: solid 2px #e5e5e5;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+.\34unit .unit-section {
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.unit-section h3 {
+  padding-top: 20px;
+}
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: block;
+    padding: 0 1rem 0 4rem;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+.prev {
+  left: 0;
+}
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+.slideshow-container p {
+  margin-bottom: 1rem;
+}
+.slideshow-container a {
+  border-bottom: none;
+}
+
+.slide-show {
+  display:
+}
+.live-poll-area {
+  overflow: auto;
+}
+.graph-container {
+  display: none;
+}
+.canvas .graph-container {
+  display: block;
+}
+.graph-container .graph {
+  width: 110px;
+  margin: 0 auto 25px auto;
+}
+.graph-container .graph canvas {
+  max-width: 110px;
+  height: auto;
+}
+.bar-chart {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 244px;
+}
+.bar-chart li {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.45;
+  overflow: auto;
+}
+.bar-chart span {
+  display: block;
+}
+.bar-chart .label {
+  font-weight: 700;
+  width: 70%;
+  float: left;
+}
+.bar-chart .percentage {
+  width: 30%;
+  float: right;
+  font-size: 12px;
+  text-align: right;
+}
+.bar-chart .bar-track {
+  clear: both;
+  display: block;
+  background: #e6f0f2;
+  box-shadow: 0 2px 0 #cccccc;
+  height: 5px;
+  overflow: visible;
+  margin-bottom: 20px;
+}
+.bar-chart .bar {
+  display: block;
+  height: 5px;
+}
+.bar-chart .answer-0 .bar {
+  background-color: #ce0f42;
+  box-shadow: 0 2px 0 #99102e;
+}
+.bar-chart .answer-1 .bar {
+  background-color: #72be44;
+  box-shadow: 0 2px 0 #538e32;
+}
+.bar-chart .answer-2 .bar {
+  background-color: #f15637;
+  box-shadow: 0 2px 0 #bd4429;
+}
+.bar-chart .answer-3 .bar {
+  background-color: #8b1851;
+  box-shadow: 0 2px 0 #53002c;
+}
+
+@media only screen and (min-width: 600px) {
+  .canvas .graph-container .graph {
+    margin: 0 30px;
+    padding: 0;
+    float: left;
+  }
+  .canvas .bar-chart {
+    float: left;
+    min-width: 244px;
+  }
+}
+
+.\34unit .pie-chart {
+  float:left;
+}
+.progress {
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: .75rem;
+  background-color: #e9ecef;
+  border-radius: .25rem;
+}
+.progress-bar {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #00CED1	;
+  transition: width .6s ease;
+}
+.\34unit p {
+  margin-bottom: 0.2rem;
+}
+.\34unit a {
+  border-bottom: none;
+}
+.word-part {
+  padding-top: 20px;
+  overflow: hidden;
+  clear:both;
+  margin-bottom: 1.5rem;
+}
+.word-part a {
+  color:#CDAA7D;
+  font-size: 14px;
+}
+.word-part a {
+  font-size: 14px;
+  overflow: hidden;
+}
+.word-enter {
+  margin-left:35%;
+  margin-right:40%;
+  border:2px dotted rgba(139,115,85,.7) !important;
+  border-radius: 5px;
+  padding:5px;
+  cursor: pointer;
+  color: #EEA2AD;
+}
+.word-enter:hover{
+  color: #FFA54F;
+}
+.weather-part a{
+  display: block;
+}
+.weather-part p{
+  overflow: hidden;
+  padding: 5px;
+}
+.sub-part {
+  padding-top: 2em;
+  border-top: solid 2px #e5e5e5;
+  border-bottom: solid 2px #e5e5e5;
+  box-shadow: inset 0px -8px 0px 0px #fff, inset 0px -10px 0px 0px #e5e5e5, inset 0px 8px 0px 0px #fff, inset 0px 10px 0px 0px #e5e5e5;
+}
+.sub-part .title {
+  text-align: center;
+  line-height:160px;
+  padding:0;
+  color:rgba(255,255,255,.8);
+  font-size:40px;
+  font-family:xiaowei;
+}
+@media (max-width: 736px){
+  .sub-part .title {
+    text-align: center;
+    line-height:80px;
+    padding:0;
+    color:rgba(255,255,255,.8);
+    font-size:40px;
+    font-family:xiaowei;
+  }
+}
+.sub-part .container {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 70em;
+  padding: 2em;
+  padding-left: 0;
+}
+@media screen and (max-width: 1680px){
+  .container {
+      width: 68em;
+  }
+}
+.btns-pattern {
+  padding-top:5rem;
+  padding-bottom: 5rem;
+  padding-left: 0;
+}
+.sub-part .item-btn {
+  background-color: #BC8F8F;
+  border: 1px groove white;
+  padding: 0;
+  width: 80%;
+  height: 80px;
+  cursor: pointer;
+}
+@media (max-width: 736px){
+  .sub-part .container {
+    margin: 0 auto;
+    width: 100%;
+    padding: 0!important;
+  }
+  .btns-pattern {
+    padding-top:3rem;
+    padding-left: 10px;
+    margin: 0!important;
+    width: 60%!important;
+  }
+  .sub-part .item-btn {
+    background-color: #BC8F8F;
+    border: none;
+    padding-left: 40px;
+    width: 80%;
+    height: 40px;
+    cursor: pointer;
+    display: block;
+
+  }
+  .row {
+    padding-top: 20px;
+  }
+}
+.sub-part .item-btn:hover, .item-btn:focus {
+  width: 100%!important;
+}
+.item-btn .menu-title {
+  text-align: center;
+  color: white;
+  border-bottom: none;
+  vertical-align: middle;
+}
+.time-input {
+  border-radius: 5px;
+  border: 2px groove #e5e5e5;
+  width: 80%;
+  height: auto;
+}
+.row {
+  overflow: hidden;
+}
+.health-part {
+  padding: 5em;
 }

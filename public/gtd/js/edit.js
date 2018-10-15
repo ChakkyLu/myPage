@@ -82,35 +82,39 @@ var ub = new Vue({
     image: null
   },
   methods: {
-    // onFileChange(e) {
-    //  var files = e.target.files || e.dataTransfer.files;
-    //  if (!files.length)
-    //    return;
-    //  this.createImage(files[0]);
-    //  let data = new FormData();
-    //  data.append('file', files[0]);
-    //  let url = "http://www.rikuki.cn/api/gtd/uploadIMG";
-    //  $.ajax({
-    //    url: url,
-    //    type: 'POST',
-    //    data: data,
-    //    success: function (data) {
-    //        console.info(data);
-    //    }
-    //  });
-    // },
-    // createImage(file) {
-    //  var image = new Image();
-    //  var reader = new FileReader();
-    //  var vm = this;
-    //  reader.onload = (e) => {
-    //     vm.image = e.target.result;
-    // };
-    //   reader.readAsDataURL(file);
-    // },
-    // removeImage: function (e) {
-    //   this.image = '';
-    // },
+    onFileChange(e) {
+     var files = e.target.files || e.dataTransfer.files;
+     if (!files.length)
+       return;
+     this.createImage(files[0]);
+     var form_data = new FormData();
+     form_data.append('file', files[0]);
+     let url = "uploadIMG";
+     $.ajax({
+        url: url,
+        cache: false,
+        contentType: false,
+        processData: false,
+        async: false,
+        data: form_data,
+        type: 'post',
+        success: function(data) {
+            console.log(data);
+        }
+      });
+   },
+    createImage(file) {
+     var image = new Image();
+     var reader = new FileReader();
+     var vm = this;
+     reader.onload = (e) => {
+        vm.image = e.target.result;
+    };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (e) {
+      this.image = '';
+    },
     autoSave: async function(){
       console.log("ahhaha");
       if (this.title || this.content) {
