@@ -130,6 +130,7 @@ var posts = new Vue({
       else this.pageSelect.push(0);
     }
     this.totalPage = totalPage;
+    this.categories = res.category;
   },
   data: {
     twits: [],
@@ -139,6 +140,8 @@ var posts = new Vue({
     newcontent: "",
     totalPage: 0,
     finalCheck: false,
-    notification: ""
+    notification: "",
+    categories: [],
+    type: 0
   }
 });

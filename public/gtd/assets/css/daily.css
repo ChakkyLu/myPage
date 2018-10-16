@@ -63,6 +63,9 @@
     padding-left: 4px;
     padding-right: 4px;
   }
+  .mySlides {
+    padding: 0 1rem 0 2rem!important;
+  }
 }
 .\34unit .unit-section {
   overflow: hidden;
@@ -77,7 +80,9 @@
   position: relative;
   margin: auto;
 }
-
+.word-text {
+  overflow: hidden;
+}
 /* Hide the images by default */
 .mySlides {
     display: block;
@@ -300,6 +305,7 @@
   clear:both;
   margin-bottom: 1.5rem;
 }
+
 .word-part a {
   color:#CDAA7D;
   font-size: 14px;
@@ -311,7 +317,7 @@
 .word-enter {
   margin-left:35%;
   margin-right:40%;
-  border:2px dotted rgba(139,115,85,.7) !important;
+  border:2px dotted rgba(32,178,170,.7) !important;
   border-radius: 5px;
   padding:5px;
   cursor: pointer;
@@ -353,10 +359,18 @@
 }
 .sub-part .container {
   margin: 0 auto;
-  max-width: 100%;
-  width: 70em;
-  padding: 2em;
-  padding-left: 0;
+  width: 100%;
+  padding-top: 2em;
+  overflow: hidden;
+}
+.sub-part ul {
+  margin: 0;
+  padding: 0;
+}
+.sub-part li {
+  margin: 0;
+  padding: 0;
+  height: 100px;
 }
 @media screen and (max-width: 1680px){
   .container {
@@ -372,7 +386,7 @@
   background-color: #BC8F8F;
   border: 1px groove white;
   padding: 0;
-  width: 80%;
+  width: 70%;
   height: 80px;
   cursor: pointer;
 }
@@ -392,7 +406,7 @@
     background-color: #BC8F8F;
     border: none;
     padding-left: 40px;
-    width: 80%;
+    width: 90%;
     height: 40px;
     cursor: pointer;
     display: block;
@@ -401,9 +415,13 @@
   .row {
     padding-top: 20px;
   }
+  .second-line {
+    margin-top: 0!important;
+    padding: 0px!important;
+  }
 }
 .sub-part .item-btn:hover, .item-btn:focus {
-  width: 100%!important;
+  width: 90%!important;
 }
 .item-btn .menu-title {
   text-align: center;
@@ -422,4 +440,25 @@
 }
 .health-part {
   padding: 5em;
+}
+.healthy-input-part {
+  border: 2px dotted lightblue;
+  border-radius: 5px;
+  padding: 3em;
+
+}
+.second-line {
+  margin-top: 1em;
+}
+.health-submit {
+  padding: 10px;
+  border: 0px groove white;
+  border-radius: 6px;
+  background-color: #48D1CC;
+  cursor: pointer;
+  color: white;
+}
+.health-submit:hover {
+  background-color: #40E0D0	;
+  color:white;
 }

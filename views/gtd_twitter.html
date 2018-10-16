@@ -71,11 +71,22 @@
                 <textarea name="content" placeholder="" v-model="newcontent"  class="std-input edit-twit"></textarea>
               </div>
               <div class="modal-footer">
-                <span v-if="newcontent.length>140"> 字数超过140的限制，憋写碎碎念，写随笔吧～ </span>
-                <button style="margin-left:auto; margin-right:0; cursor:pointer; margin-top:10px" v-on:click="newTwit" v-bind:class="{disabled: newcontent.length<=0 || newcontent.length>140 }">发表新的碎碎念</button>
+                <div class="row">
+                  <div class="col-6 col-12-medium" style="padding-top:10px;">
+                  <label style="font-size:12px; padding-right:10px;"> 选择分类 </label>
+                  <select name="category" value="0" v-model="type" class="twit-select" v-if="categories.length">
+                    <option :value="category.id" v-for="category in categories">{{category.text}}</option>
+                    <option value="0" >默认分类</option>
+                  </select>
+                </div>
+                  <div class="col-6 col-12-medium">
+                  <span v-if="newcontent.length>140"> 字数超过140的限制，憋写碎碎念，写随笔吧～ </span>
+                  <button class="twit-submit" v-on:click="newTwit" v-bind:class="{disabled: newcontent.length<=0 || newcontent.length>140 }">发表新的碎碎念</button>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
           <div id="hint" class="modal">
             <div class="modal-content">

@@ -41,7 +41,7 @@
 													<li><a href="#">月刊</a></li>
 												</ul>
 											</li>
-											<li><a href="triffle.com">胡言乱语</a></li>
+											<li><a href="triffle.html">胡言乱语</a></li>
 										</ul>
 									</li>
 									<li><a class="icon fa-cog" href="daily.html"><span>日常</span></a></li>
@@ -57,6 +57,7 @@
           <header>
             <h2 class="main-title">画个圈圈，然后 <strong>跳进去</strong> 如此画地为牢 </h2>
           </header>
+					<h3 v-if="!healthy.length">加载中 </h3>
           <div class="row main-line">
             <div class="4unit">
               <section class="unit-section">
@@ -100,12 +101,12 @@
               <section class="unit-section">
               	<header>
 								<a class="icon"><img src="images/word_icon.png" alt="健康管理" width="60" height="60"></a>
-								<h3 style="padding-top:5px; margin-bottom:0;">背背单词</h3>
+								<h3 >背背单词</h3>
 								</header>
 							</section>
 							<section class="word-part">
 								<canvas id="pie" style="float:left;width:250px;"></canvas>
-								<div>
+								<div class="word-test">
 									<p> <a>今日任务 </a> <span> 300 </span></p>
 									<p> <a>昨日准确率 </a> <span> 60% </span></p>
 									<p> <a>目前进度 </a> <span> 20% </span></p>
@@ -121,34 +122,73 @@
 						<div class="4unit">
               <section class="unit-section">
               	<header>
-								<a class="icon"><img src="images/weather_icon.png" alt="健康管理" width="60" height="60"></a>
-								<h3 style="padding-top:5px; margin-bottom:0;">健康管理</h3>
+								<a class="icon"><img src="images/weather_icon.png" alt="任务管理" width="60" height="60"></a>
+								<h3 >任务管理</h3>
 								</header>
 							</section>
-							<div class="slideshow-container">
-							  <div class="mySlides fade" v-for="health in healthy" v-show="health.clicked">
-									<h3>{{health.date}}</h3>
-							    <p> <a>起床：</a>&nbsp;<span>{{health.wake}}</span> &nbsp;&nbsp;&nbsp; <a>睡觉：</a>&nbsp; <span> {{health.sleep}}</p>
-									<p>
-							  </div>
-
-
-							  <!-- Next and previous buttons -->
-							  <a class="prev" v-on:click="plusSlides(-1)">&#10094;</a>
-							  <a class="next" v-on:click="plusSlides(1)">&#10095;</a>
-							</div>
-							<br>
-
-							<!-- The dots/circles -->
-							<div style="text-align:center">
-							  <span class="dot" v-on:click="currentSlide(0)"></span>
-							  <span class="dot" v-on:click="currentSlide(1)"></span>
-							  <span class="dot" v-on:click="currentSlide(2)"></span>
-							</div>
-
             </div>
           </div>
         </section>
+			<section class="features sub-part" id="work">
+				<div class="container">
+					<div class="row">
+						<div class="col-3 col-12-medium">
+							<div class="btns-pattern">
+								<div class="item-btn" v-on:click="workMenu(0)">
+									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
+								 </div>
+								 <div class="item-btn" v-on:click="workMenu(1)">
+ 									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
+ 								 </div>
+								 <div class="item-btn" v-on:click="workMenu(2)">
+ 									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
+ 								 </div>
+							</div>
+						</div>
+						<div class="col-9 col-12-medium">
+							<div class="healthy-input-part">
+								<div class="row">
+									<div class="col-3 col-6-medium">
+										<label for="wake" style="margin-left:20%;margin-bottom:10px;"> 起床时间 </label>
+										<input type="time" class="time-input" v-model="newrecord.wake" required/>
+									</div>
+									<div class="col-3 col-6-medium">
+										<label for="sleep" style="margin-left:20%;margin-bottom:10px;"> 睡觉时间 </label>
+										<input type="time" class="time-input" v-model="newrecord.sleep" required/>
+									</div>
+									<div class="col-3 col-6-medium">
+										<label for="duration" style="margin-left:20%;margin-bottom:10px;"> 睡眠时长 </label>
+										<input type="time" class="time-input"  v-model="newrecord.duration" required/>
+									</div>
+									<div class="col-3 col-6-medium">
+										<label for="depth" style="margin-left:20%;margin-bottom:10px;"> 深度睡眠 </label>
+										<input type="number" class="time-input" v-model="newrecord.depth" required/>
+									</div>
+								</div>
+								<div class="row second-line">
+									<div class="col-3 col-6-medium">
+										<label for="steps" style="margin-left:20%;margin-bottom:10px;"> 步行距离 </label>
+										<input type="text" class="time-input" v-model="newrecord.distance" required/>
+									</div>
+									<div class="col-3 col-6-medium">
+										<label for="steps" style="margin-left:20%;margin-bottom:10px;"> 行走步数 </label>
+										<input type="number" class="time-input" v-model="newrecord.step" required/>
+									</div>
+									<div class="col-3 col-6-medium">
+										<label for="score" style="margin-left:20%;margin-bottom:10px;"> 机器打分 </label>
+										<input type="number" class="time-input"  v-model="newrecord.score" required/>
+									</div>
+								</div>
+								<div class="col-3 col-12-medium">
+									<div style="overflow:hidden; padding:10px;">
+										<a class="health-submit" style="float:right;" v-on:click="newRecord()"> 提交今日 </a>
+									</div>
+								</div>
+							</div>
+
+					</div>
+				</div>
+			</section>
 
   </div>
       <script src="assets/js/jquery.min.js"></script>

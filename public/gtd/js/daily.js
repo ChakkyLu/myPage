@@ -19,7 +19,6 @@ var daily = new Vue({
     ];
     var colors = [ '#ed786a', '#1E90FF', '#8B658B'];
     var canvas = document.getElementById('pie');
-
     drawPie(data, colors, canvas);
   },
   methods: {
@@ -55,15 +54,32 @@ var daily = new Vue({
 var work = new Vue({
   el: '#work',
   data: {
-
+    newrecord: Object
   },
   methods: {
     workMenu: function(n) {
       let menus = document.getElementsByClassName('item-btn');
       for (let i = 0; i < menus.length; i++) {
-        menus[i].style.width = '80%';
+        menus[i].style.width = '70%';
       }
-      menus[n].style.width = '100%';
+      menus[n].style.width = '90%';
+    },
+    newRecord: function() {
+      let url = "/api/gtd/daily/healthInput";
+      let data = {
+        wake: this.newrecord.wake,
+        sleep: this.newrecord.sleep,
+        duration: this.newrecord.duration,
+        step: this.newrecord.step,
+        depth: this.newrecord.depth,
+        distance: this.newrecord.distance,
+        score: this.newrecord.score
+      }
+      $.post(url, data, function(data, status) {
+        data = JSON.parse(data)
+        if (data.code == 200) window.location.reload();
+        else console.log("database err");
+      })
     }
   }
 });
