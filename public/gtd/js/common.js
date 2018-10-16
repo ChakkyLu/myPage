@@ -16,7 +16,7 @@ let sendPost = function sendPost(url, body) {
       if(typeof(data) == 'string') {
         data = JSON.parse(data);
       }
-      if (data.code!=200) reject(data.msg);
+      if (data.code>=400) reject(data.msg);
       else resolve(data);
     });
   });

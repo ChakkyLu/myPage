@@ -129,7 +129,7 @@
             </div>
           </div>
         </section>
-			<section class="features sub-part" id="work">
+				<section class="features sub-part" id="work">
 				<div class="container">
 					<div class="row">
 						<div class="col-3 col-12-medium">
@@ -138,7 +138,7 @@
 									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
 								 </div>
 								 <div class="item-btn" v-on:click="workMenu(1)">
- 									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
+ 									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 日历汇总</h3>
  								 </div>
 								 <div class="item-btn" v-on:click="workMenu(2)">
  									<h3 style="color:white; padding-top:10px; padding-left:20px;"> 今日健康</h3>
@@ -146,29 +146,29 @@
 							</div>
 						</div>
 						<div class="col-9 col-12-medium">
-							<div class="healthy-input-part">
+							<form class="healthy-input-part" action="#" v-show="slideItem == 0">
 								<div class="row">
 									<div class="col-3 col-6-medium">
 										<label for="wake" style="margin-left:20%;margin-bottom:10px;"> 起床时间 </label>
-										<input type="time" class="time-input" v-model="newrecord.wake" required/>
+										<input type="time" class="time-input" v-model="newrecord.wake" name="wake" required />
 									</div>
 									<div class="col-3 col-6-medium">
 										<label for="sleep" style="margin-left:20%;margin-bottom:10px;"> 睡觉时间 </label>
-										<input type="time" class="time-input" v-model="newrecord.sleep" required/>
+										<input type="time" class="time-input" v-model="newrecord.sleep" required />
 									</div>
 									<div class="col-3 col-6-medium">
 										<label for="duration" style="margin-left:20%;margin-bottom:10px;"> 睡眠时长 </label>
-										<input type="time" class="time-input"  v-model="newrecord.duration" required/>
+										<input type="time" class="time-input"  v-model="newrecord.duration" required />
 									</div>
 									<div class="col-3 col-6-medium">
 										<label for="depth" style="margin-left:20%;margin-bottom:10px;"> 深度睡眠 </label>
-										<input type="number" class="time-input" v-model="newrecord.depth" required/>
+										<input type="number" class="time-input" v-model="newrecord.depth" min="0" max="100" required />
 									</div>
 								</div>
 								<div class="row second-line">
 									<div class="col-3 col-6-medium">
 										<label for="steps" style="margin-left:20%;margin-bottom:10px;"> 步行距离 </label>
-										<input type="text" class="time-input" v-model="newrecord.distance" required/>
+										<input type="number" class="time-input" v-model="newrecord.distance" step="0.01" required/>
 									</div>
 									<div class="col-3 col-6-medium">
 										<label for="steps" style="margin-left:20%;margin-bottom:10px;"> 行走步数 </label>
@@ -178,19 +178,100 @@
 										<label for="score" style="margin-left:20%;margin-bottom:10px;"> 机器打分 </label>
 										<input type="number" class="time-input"  v-model="newrecord.score" required/>
 									</div>
+									<div class="col-3 col-6-medium">
+										<label for="score" style="margin-left:20%;margin-bottom:10px;"> 补记日期 </label>
+										<input type="date" class="time-input"  v-model="newrecord.date"/>
+									</div>
 								</div>
-								<div class="col-3 col-12-medium">
-									<div style="overflow:hidden; padding:10px;">
-										<a class="health-submit" style="float:right;" v-on:click="newRecord()"> 提交今日 </a>
+								<div class="row second-line" >
+									<div class="col-3 col-6-medium">
+										<div style="padding:10px;">
+											<button class="health-submit" type="submit" v-on:click="newRecord(1)"> 补记之前 </button>
+										</div>
+									</div>
+									<div class="col-3 col-6-medium">
+										<div style="overflow:hidden; padding:10px;">
+											<button class="health-submit" type="submit" v-on:click="newRecord(0)"> 提交今日 </button>
+										</div>
+									</div>
+									<div class="col-6 col-12-medium">
+										<div style="padding:2em; border: 2px dotted rgba(245,79,41,.8); border-radius:5px;">
+											<h3> {{ friendlyMSG }}</h3>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="calender-part" v-show="slideItem == 1">
+								<div class="row">
+									<div class="col-7 col-12-medium">
+										<div class="calendar-container">
+											<section>
+												<header style="padding:15px;">
+													<div class="row">
+														<div class="col-2">
+															<a class="prev-month" v-on:click="showCalendar(-1)"><<</a>
+														</div>
+														<div class="col-8">
+															<h3 class="calendar-title" >2018年{{currentMonth}}月</h3>
+														</div>
+														<div class="col-2">
+															<a class="next-month" v-on:click="showCalendar(1)">>></a>
+														</div>
+													</div>
+												</header>
+												<div class="calendar-main" >
+													<ul>
+														<li v-for="c in calendar">
+															<div class="unit-circle" >{{c+1}}</div>
+														</li>
+													</ul>
+												</div>
+											</section>
+										</div>
+									</div>
+									<div class="col-5 col-12-medium">
+										<div style="padding:2em">
+											<div class="day-health-comment">
+												<div class="row">
+													<div class="col-4"><span>睡眠状态:&nbsp;&nbsp;&nbsp;</span></div>
+													<div class="col-8">
+														<div class="unit-rect-part"><div class="unit-rectangle" ></div><span class="sub-item"> 时长：8h</span></div>
+														<div class="unit-rect-next"><div class="unit-rectangle"></div><span class="sub-item"> 深度：40%深睡眠</span></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4"><span>运动情况:&nbsp;&nbsp;&nbsp;</span></div>
+													<div class="col-8">
+														<div class="unit-rect-part"><div class="unit-rectangle" ></div><span class="sub-item"> 步行：5km</span></div>
+														<div class="unit-rect-next"><div class="unit-rectangle"></div><span class="sub-item"> 跑步：20分章</span></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4"><span>任务清单:&nbsp;&nbsp;&nbsp;</span></div>
+													<div class="col-8">
+														<div class="unit-rect-part"><div class="unit-rectangle" ></div><span class="sub-item"> 增加个人主页健康管理模块 </span></div>
+														<div class="unit-rect-next"><div class="unit-rectangle"></div><span class="sub-item"> 完成汇报ppt的80% </span></div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4"><span>特殊情况:&nbsp;&nbsp;&nbsp;</span></div>
+													<div class="col-8">
+														<div class="unit-rect-part"><div class="unit-rectangle" ></div><span class="sub-item"> 又又又又花粉症过敏了 </span></div>
+														<div class="unit-rect-next"><div class="unit-rectangle"></div><span class="sub-item"> 玩橙光，撕心裂肺 </span></div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-
+						</div>
 					</div>
 				</div>
 			</section>
 
   </div>
+
       <script src="assets/js/jquery.min.js"></script>
       <script src="assets/js/jquery.dropotron.min.js"></script>
       <script src="assets/js/browser.min.js"></script>

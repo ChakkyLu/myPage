@@ -54,32 +54,88 @@ var daily = new Vue({
 var work = new Vue({
   el: '#work',
   data: {
-    newrecord: Object
+    newrecord: Object,
+    friendlyMSG: "友好信息",
+    calendar: [],
+    slideItem: 0,
+    currentMonth: 10
+  },
+  mounted: function(){
+    for (let i=0; i<31; i++) {
+      this.calendar.push(i);
+    }
   },
   methods: {
+    showCalendar: function(n) {
+      let odd = [1,3,5,7,8,10,12];
+      let even = [3,6,9,11];
+      this.currentMonth = this.currentMonth + n;
+      if (this.currentMonth < 1) this.currentMonth = 12;
+      if (this.currentMonth > 12) this.currentMonth = 1;
+      let days;
+      if (this.currentMonth == 2) days = 28;
+      else{
+          if (odd.indexOf(this.currentMonth)!= -1) days = 31;
+          else days = 30;
+      }
+      this.calendar.splice(0,this.calendar.length);
+      for (let i=0; i<days; i++) {
+        this.calendar.push(i);
+      }
+    },
     workMenu: function(n) {
       let menus = document.getElementsByClassName('item-btn');
+      this.slideItem = n;
       for (let i = 0; i < menus.length; i++) {
         menus[i].style.width = '70%';
       }
       menus[n].style.width = '90%';
     },
-    newRecord: function() {
-      let url = "/api/gtd/daily/healthInput";
-      let data = {
-        wake: this.newrecord.wake,
-        sleep: this.newrecord.sleep,
-        duration: this.newrecord.duration,
-        step: this.newrecord.step,
-        depth: this.newrecord.depth,
-        distance: this.newrecord.distance,
-        score: this.newrecord.score
+    newRecord: async function(status) {
+      var data;
+      if (status == 1 && this.newrecord.date) {
+        data  = {
+          wake: this.newrecord.wake,
+          sleep: this.newrecord.sleep,
+          duration: this.newrecord.duration,
+          step: this.newrecord.step,
+          depth: this.newrecord.depth,
+          distance: this.newrecord.distance,
+          score: this.newrecord.score,
+          created: this.newrecord.date
+        }
+      } else {
+        data = {
+          wake: this.newrecord.wake,
+          sleep: this.newrecord.sleep,
+          duration: this.newrecord.duration,
+          step: this.newrecord.step,
+          depth: this.newrecord.depth,
+          distance: this.newrecord.distance,
+          score: this.newrecord.score
+        }
       }
-      $.post(url, data, function(data, status) {
-        data = JSON.parse(data)
-        if (data.code == 200) window.location.reload();
-        else console.log("database err");
-      })
+      for (var attr in data) {
+        if (!data[attr]) {
+          this.friendlyMSG = "请填写所有必要项";
+          return false;
+        }
+      }
+      let url = "/api/gtd/daily/healthInput";
+      let res = await sendPost(url, data);
+      switch (parseInt(res.code)) {
+        case 200:
+          this.friendlyMSG = "成功录入信息";
+          // window.location.reload();
+          break;
+        case 203:
+          this.friendlyMSG = "该日信息已经录入，暂时不提供修改功能";
+          break;
+        default:
+          this.friendlyMSG = "数据库错误，请检查源代码";
+          break;
+      }
+      return false;
     }
   }
 });

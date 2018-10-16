@@ -59,6 +59,8 @@ var posts = new Vue({
       }
       let res = await sendReq("/api/gtd/getFTW?id=19&page="+this.curPage);
       this.twits = res.ctx;
+      this.twitsbackup = this.twits;
+      this.filter();
       $("html, body").animate({ scrollTop: 0 });
     },
     showModal: function() {
@@ -71,11 +73,26 @@ var posts = new Vue({
         modal[i].style.display = "none";
       }
     },
+    filter: function() {
+      if (this.filterItem == 0) {
+        this.twits = this.twitsbackup;
+      } else{
+        let selected;
+        for(let i=0; i<this.categories.length; i++) {
+          if (this.categories[i].id == this.filterItem) {
+            selected = this.categories[i].text;
+            break;
+          }
+        }
+        this.twits = this.twitsbackup.filter(twit => twit.category == selected);
+      }
+    },
     newTwit: function() {
       let content = this.newcontent;
       let url = "http://www.rikuki.cn/api/gtd/newT";
       $.post(url, {
-        content: content
+        content: content,
+        type: this.type
       }, function(data, status) {
         data = JSON.parse(data);
         switch(data.code) {
@@ -131,6 +148,7 @@ var posts = new Vue({
     }
     this.totalPage = totalPage;
     this.categories = res.category;
+    this.twitsbackup = this.twits;
   },
   data: {
     twits: [],
@@ -142,6 +160,8 @@ var posts = new Vue({
     finalCheck: false,
     notification: "",
     categories: [],
-    type: 0
+    type: 0,
+    filterItem: 0,
+    twitsbackup: []
   }
 });

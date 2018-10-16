@@ -61,6 +61,13 @@
           <ul class="actions" style="margin:0; padding:20px 0 0 0; text-align:center" >
             <li style="margin-left:auto; margin-right:auto; display:inline-block;"><a v-on:click="showModal" class="button icon fa-file">新的碎碎念</a></li>
           </ul>
+          <div style="height:40px; width:100%; margin-top:30px;">
+            <select  class="filter" v-model="filterItem" v-on:change="filter()">
+              <option value="0">过滤分类</option>
+              <option :value="category.id" v-for="(category,index) in categories">{{category.text}}</option>
+            </select>
+          </div>
+
           <div id="newTwit" class="modal">
             <div class="modal-content">
               <span class="close" v-on:click="close">&times;</span>
@@ -115,7 +122,8 @@
                 </div>
               </div>
             </li>
-            <h1 v-if="!twits.length">加载中</h1>
+            <h1 v-if="!twitsbackup.length">加载中</h1>
+            <h3 v-if="!twits.length">本页找不到符合条件的碎碎念</h3>
           </ul>
 
           <ul class="pagination modal-2">

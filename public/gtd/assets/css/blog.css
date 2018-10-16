@@ -425,3 +425,21 @@ img {
 /*.modal-footer .row label{
   display: inline;
 }*/
+.filter {
+  width: 15%;
+  height: 40px;
+  float: right;
+  border: 1px groove gray;
+  background-color: white;
+  border-radius: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .filter {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+}
