@@ -1,41 +1,20 @@
 #!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require('../main');
 var debug = require('debug')('mypage:server');
 var http = require('http');
 
-/**
- * Get port from environment and store in Express.
- */
-
 var port = normalizePort(process.env.PORT || '8888');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
 
 var server = http.createServer(app, function(req, res){
   res.writeHeader(200, {'Content-Type': "text/plain"});
   res.end();
 });
 
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -52,10 +31,6 @@ function normalizePort(val) {
 
   return false;
 }
-
-/**
- * Event listener for HTTP server "error" event.
- */
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -80,10 +55,6 @@ function onError(error) {
       throw error;
   }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
 
 function onListening() {
   var addr = server.address();
